@@ -1,3 +1,4 @@
+@include('layouts.navigation')
 <x-guest-layout>
     <form method="POST" action="{{ route('user.store') }}">
         @csrf
@@ -30,7 +31,7 @@
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input-label for="users_role" :value="__('Confirm Password')" />
+            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
                 name="password_confirmation" required autocomplete="new-password" />
@@ -38,9 +39,18 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
+        {{-- class --}}
+        <div class="mt-4">
+            <x-input-label for="class" :value="__('Class')" />
+
+            <x-text-input id="class" class="block mt-1 w-full" type="text" name="class" required />
+
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
         {{-- Users role --}}
         <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Role')" />
+            <x-input-label for="users_role" :value="__('Role')" />
 
             <select name="role" class="form-control" required>
                 <option value="Teacher">Teacher</option>

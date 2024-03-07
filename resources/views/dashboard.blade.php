@@ -13,7 +13,8 @@
                 </div>
             </div> --}}
             {{-- <a href="#">Add a New User</a> --}}
-            <a href="{{ route('user.create') }}">Add a New User</a>
+            <a href="{{ route('user.create') }}" class="btn btn-outline-secondary">Add a New User</a>
         </div>
     </div>
+
 </x-app-layout>

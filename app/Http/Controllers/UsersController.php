@@ -26,6 +26,7 @@ class UsersController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed'],
             'role' => 'required',
+            'class' => 'required',
         ]);
 
         $user = User::create([
@@ -33,8 +34,17 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'class' => $request->class,
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Add a new User');
+    }
+
+    public function teacher(){
+        $teachers = User::where('role', 'Teacher')->get();
+        return view('teacherPage', ['teachers' => $teachers]);
+    }
+    public function student(){
+        return view('studentPage');
     }
 }

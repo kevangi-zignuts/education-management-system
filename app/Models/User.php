@@ -44,4 +44,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'user_subjects', 'user_id');
+    }
+
+    // public function teacherSubjects()
+    // {
+    //     return $this->hasMany(Subject::class, 'user_id');
+    // }
 }

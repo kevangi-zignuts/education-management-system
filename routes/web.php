@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\SubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'user'], function(){
         Route::get('create', [UsersController::class, 'create'])->name('user.create');
         Route::post('register', [UsersController::class, 'store'])->name('user.store');
+        Route::get('teacher', [UsersController::class, 'teacher'])->name('teacher');
+        Route::get('student', [UsersController::class, 'student'])->name('student');
     });
+
+    Route::get('subject', [SubjectController::class, 'subject'])->name('subject');
+    Route::post('store', [SubjectController::class, 'store'])->name('subject.store');
+    Route::get('add', [SubjectController::class, 'addSubject'])->name('subject.add');
 });
 
 require __DIR__.'/auth.php';
