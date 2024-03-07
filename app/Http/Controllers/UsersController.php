@@ -45,6 +45,7 @@ class UsersController extends Controller
         return view('teacherPage', ['teachers' => $teachers]);
     }
     public function student(){
-        return view('studentPage');
+        $students = User::where('role', 'Student')->get();
+        return view('studentPage', ['students' => $students]);
     }
 }

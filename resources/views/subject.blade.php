@@ -22,12 +22,18 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Subject Name</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($subjects as $subject)
                         <tr>
-                            <th scope="row">{{ $subject->subject_name }}</th>
+                            <td scope="row">{{ $subject->subject_name }}</td>
+                            <td><a href="{{ route('subject.view.teacher', ['id' => $subject->id]) }}">View Teachers</a>
+                            </td>
+                            <td><a href="{{ route('subject.view.student', ['id' => $subject->id]) }}">View Students</a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
