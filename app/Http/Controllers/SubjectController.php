@@ -40,45 +40,28 @@ class SubjectController extends Controller
     }
 
     public function addSubject($id){
+        $user = User::findOrFail($id);
         $subjects = Subject::all();
-        return view('addSubject', ['subjects' => $subjects, 'id' => $id]);
+        $userSubjectIds = [];
+        foreach ($user->subject as $userSubject) {
+            $userSubjectIds[] = $userSubject->id;
+        }
+        return view('addSubject', ['subjects' => $subjects, 'id' => $id, 'userSubjectIds' => $userSubjectIds,]);
     }
 
     public function userStore(Request $request, $id){
         $user = User::findOrFail($id);
         $subjectIds = $request->input('subjects');
-        $user->subject()->syncWithoutDetaching($subjectIds);
-        return redirect()->back()->with('success', 'Add Subject Successfully');
-    }
-
-    public function showUserSubjects($id){
-        try {
-            $user = User::with('subject')->findOrFail($id);
-
-            // Check if subjects are loaded
-            if ($user->subject) {
-                $subjects = $user->subject;
-                return view('viewSubject', ['user' => $user, 'subjects' => $subjects]);
-            } else {
-                return redirect()->back()->with('error', 'No subjects found for user');
-            }
-        } catch (ModelNotFoundException $exception) {
-            return redirect()->back()->with('error', 'User Not found');
+        $user->subject()->sync($subjectIds);
+        $teachers = User::where('role', 'Teacher')->get();
+        $students = User::where('role', 'Student')->get();
+        if($user->role === 'Teacher'){
+            return view('teacherPage', ['teachers' => $teachers])->with('success', 'Add Subject Successfully');
         }
+        return view('studentPage', ['students' => $students])->with('success', 'Add Subject Successfully');
     }
 
-    public function viewTeacher($id){
-        $usersInSubject = User::whereHas('subject', function ($query) use ($id) {
-            $query->where('subject_id', $id);
-        })->where('role', 'Teacher')->get(['name']);
-        $userNames = $usersInSubject->pluck('name')->toArray();
-        return view('viewTeacher', ['teacherNames' => $userNames]);
-    }
-    public function viewStudent($id){
-        $usersInSubject = User::whereHas('subject', function ($query) use ($id) {
-            $query->where('subject_id', $id);
-        })->where('role', 'Student')->get(['name']);
-        $userNames = $usersInSubject->pluck('name')->toArray();
-        return view('viewStudent', ['studentNames' => $userNames]);
-    }
+
+
+
 }

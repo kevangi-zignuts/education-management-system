@@ -48,11 +48,19 @@
                         <label>Select Subjects:</label>
                         @foreach ($subjects as $subject)
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="subjects[]"
-                                    value="{{ $subject->id }}" id="subject_{{ $subject->id }}">
-                                <label class="form-check-label" for="subject_{{ $subject->id }}">
-                                    {{ $subject->subject_name }}
-                                </label>
+                                @if (in_array($subject->id, $userSubjectIds))
+                                    <input class="form-check-input" type="checkbox" name="subjects[]"
+                                        value="{{ $subject->id }}" id="subject_{{ $subject->id }}" checked>
+                                    <label class="form-check-label" for="subject_{{ $subject->id }}">
+                                        {{ $subject->subject_name }}
+                                    </label>
+                                @else
+                                    <input class="form-check-input" type="checkbox" name="subjects[]"
+                                        value="{{ $subject->id }}" id="subject_{{ $subject->id }}">
+                                    <label class="form-check-label" for="subject_{{ $subject->id }}">
+                                        {{ $subject->subject_name }}
+                                    </label>
+                                @endif
                             </div>
                         @endforeach
                         <button type="submit" class="btn btn-outline-secondary"

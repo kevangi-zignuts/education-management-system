@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\InstitutionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,15 +36,16 @@ Route::middleware('auth')->group(function () {
         Route::post('register', [UsersController::class, 'store'])->name('user.store');
         Route::get('teacher', [UsersController::class, 'teacher'])->name('teacher');
         Route::get('student', [UsersController::class, 'student'])->name('student');
+        Route::get('subject/viewTeacher/{id}', [UsersController::class, 'viewTeacher'])->name('subject.view.teacher');
+        Route::get('subject/viewStudent/{id}', [UsersController::class, 'viewStudent'])->name('subject.view.student');
+        Route::get('viewSubject/{id}', [UsersController::class, 'showUserSubjects'])->name('subject.view');
     });
 
     Route::get('subject', [SubjectController::class, 'subject'])->name('subject');
     Route::post('store', [SubjectController::class, 'store'])->name('subject.store');
     Route::get('add/{id}', [SubjectController::class, 'addSubject'])->name('subject.add');
     Route::post('storeSubject/{id}', [SubjectController::class, 'userStore'])->name('subject.user');
-    Route::get('viewSubject/{id}', [SubjectController::class, 'showUserSubjects'])->name('subject.view');
-    Route::get('subject/viewTeacher/{id}', [SubjectController::class, 'viewTeacher'])->name('subject.view.teacher');
-    Route::get('subject/viewStudent/{id}', [SubjectController::class, 'viewStudent'])->name('subject.view.student');
+    Route::get('institution', [InstitutionController::class, 'institute'])->name('institution');
 
 });
 
