@@ -20,7 +20,7 @@
                             <label class="form-check-label" for="subject_{{ $teacher->id }}">
                                 {{ $teacher->name }}
                             </label>
-                            <input type="hidden" name="teacher_id" value="{{ $teacher->id }}">
+                            {{-- <input type="hidden" name="teacher_id" value="{{ $teacher->id }}"> --}}
                         </div>
                     @endforeach
                     <button type="submit" class="btn btn-outline-secondary"

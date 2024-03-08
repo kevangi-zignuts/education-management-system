@@ -9,8 +9,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             <ul>
-                @foreach ($teacherNames as $teacherName)
-                    <li>{{ $teacherName }}</li>
+                @foreach ($teachers as $teacher)
+                    <li>{{ $teacher->name }}</li>
                 @endforeach
             </ul>
         </div>

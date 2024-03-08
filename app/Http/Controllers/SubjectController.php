@@ -10,11 +10,17 @@ use App\Models\User;
 
 class SubjectController extends Controller
 {
+    /**
+     * index Page of the Subjects
+     */
     public function subject(){
         $subjects = Subject::all();
-        return view('subject', ['subjects' => $subjects]);
+        return view('subject.index', ['subjects' => $subjects]);
     }
 
+    /**
+     * Store the data of the new Subject added
+     */
     public function store(Request $request){
         $request->validate([
             'subject_name' => 'required',
@@ -27,41 +33,21 @@ class SubjectController extends Controller
         return redirect()->back()->with('success', 'New subject is added');
     }
 
-    public function storeSubject(Request $request){
-        $request->validate([
-            'subject_name' => 'required',
-        ]);
-
-        Subject::create([
-            'subject_name' => $request['subject_name'],
-        ]);
-
-        return redirect()->back()->with('success', 'New subject is added');
+    /**
+     * View Teacher of the perticuler subject
+     */
+    public function viewTeacher($id){
+        $subject    = Subject::find($id);
+        $teachers   = $subject->user()->where('role', 'Teacher')->get();
+        return view('users.teacher.view', ['teachers' => $teachers]);
     }
 
-    public function addSubject($id){
-        $user = User::findOrFail($id);
-        $subjects = Subject::all();
-        $userSubjectIds = [];
-        foreach ($user->subject as $userSubject) {
-            $userSubjectIds[] = $userSubject->id;
-        }
-        return view('addSubject', ['subjects' => $subjects, 'id' => $id, 'userSubjectIds' => $userSubjectIds,]);
+    /**
+     * View Student of the perticuler subject
+     */
+    public function viewStudent($id){
+        $subject    = Subject::find($id);
+        $students   = $subject->user()->where('role', 'Student')->get();
+        return view('users.student.view', ['students' => $students]);
     }
-
-    public function userStore(Request $request, $id){
-        $user = User::findOrFail($id);
-        $subjectIds = $request->input('subjects');
-        $user->subject()->sync($subjectIds);
-        $teachers = User::where('role', 'Teacher')->get();
-        $students = User::where('role', 'Student')->get();
-        if($user->role === 'Teacher'){
-            return view('teacherPage', ['teachers' => $teachers])->with('success', 'Add Subject Successfully');
-        }
-        return view('studentPage', ['students' => $students])->with('success', 'Add Subject Successfully');
-    }
-
-
-
-
 }

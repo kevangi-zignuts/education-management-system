@@ -8,11 +8,17 @@ use App\Models\User;
 
 class InstitutionController extends Controller
 {
-    public function institute(){
+    /**
+     * index Page of the Intitutions
+     */
+    public function index(){
         $institutions = Institution::all();
-        return view('institutionPage', ['institutions' => $institutions]);
+        return view('institution.index', ['institutions' => $institutions]);
     }
 
+    /**
+     * Store the data of the new Institution added
+     */
     public function store(Request $request){
         $request->validate([
             'institute_name' => 'required',
@@ -25,34 +31,55 @@ class InstitutionController extends Controller
         return redirect()->back()->with('success', 'New institute is added');
     }
 
+    /**
+     * Open a form for add the teacher in the institution
+     */
     public function addteacher($id){
-        $institute = Institution::findOrFail($id);
-        $teachers = User::where('role', 'teacher')
+        $institute  = Institution::findOrFail($id);
+        $teachers   = User::where('role', 'teacher')
                         ->where(function ($query) use ($institute) {
                             $query->whereNull('institute_id')
                                 ->orWhere('institute_id', $institute->id);
                         })->get();
         $selectedTeachers = User::where('institute_id', $institute->id)->get();
-        return view('addTeacherInstitute', ['teachers' => $teachers, 'id' => $id, 'selectedTeachers' => $selectedTeachers]);
+        return view('users.teacher.add', ['teachers' => $teachers, 'id' => $id, 'selectedTeachers' => $selectedTeachers]);
     }
 
+    /**
+     * store the data of the currently added teacher in the institute
+     */
     public function storeTeacher(Request $request, $id){
+        // dd($request->all());
         $institute = Institution::findOrFail($id);
-        $previouslyAssociatedTeachers = User::where('institute_id', $institute->id)->get();
-        foreach ($previouslyAssociatedTeachers as $teacher) {
-            $teacher->update(['institute_id' => null]);
+        // dd($request->has('teacher_ids'));
+        if($request->has('teacher_ids')){
+            // $previouslyAssociatedTeachers = User::where('institute_id', $institute->id)
+            //                                     ->update(['institute_id' => null]);
+            // $previouslyAssociatedTeachers = User::whereIn('id', $request->teacher_ids)
+            //                                     ->update(['institute_id' => $institute->id]);
+            $previouslyAssociatedTeachers = User::where(function ($query) use ($institute) {
+                    $query->where('institute_id', $institute->id)
+                        ->update(['institute_id' => null]);
+                    $query->whereIn('id', $request->teacher_ids)
+                        ->update(['institute_id' => $institute->id]);
+            })->get();
         }
-        $selectedTeacherIds = $request->input('teacher_ids', []);
-        foreach($selectedTeacherIds as $teacher){
-            $teacher = User::findOrFail($teacher);
-            $teacher->update(['institute_id' => $institute->id]);
-        }
+        // foreach ($previouslyAssociatedTeachers as $teacher) {
+        //     $teacher->update(['institute_id' => null]);
+        // }
+        // $selectedTeacherIds = $request->input('teacher_ids', []);
+        // foreach($selectedTeacherIds as $teacher){
+        //     $teacher = User::findOrFail($teacher);
+        //     $teacher->update(['institute_id' => $institute->id]);
+        // }
         return redirect()->route('institution')->with('success', 'Add teacher Successfullly');
     }
 
+    /**
+     * view all the teachers that are in the institution
+     */
     public function viewTeacher($id){
-        $user = User::where('institute_id', $id);
-        $teacherNames = $user->pluck('name')->toArray();
-        return view('viewTeacher', ['teacherNames' => $teacherNames]);
+        $user = User::where('institute_id', $id)->get();
+        return view('users.teacher.view', ['teachers' => $user]);
     }
 }
