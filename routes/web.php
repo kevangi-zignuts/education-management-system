@@ -38,7 +38,9 @@ Route::middleware('auth')->group(function () {
         Route::get('student', [UsersController::class, 'student'])->name('student');
         Route::get('subject/viewTeacher/{id}', [UsersController::class, 'viewTeacher'])->name('subject.view.teacher');
         Route::get('subject/viewStudent/{id}', [UsersController::class, 'viewStudent'])->name('subject.view.student');
-        Route::get('viewSubject/{id}', [UsersController::class, 'showUserSubjects'])->name('subject.view');
+        Route::get('view/subject/{id}', [UsersController::class, 'showUserSubjects'])->name('subject.view');
+        Route::get('add/institution/{id}', [UsersController::class, 'addInstitute'])->name('user.add.institute');
+        Route::post('store/institution/{id}', [UsersController::class, 'storeInstitute'])->name('user.store.institute');
     });
 
     Route::get('subject', [SubjectController::class, 'subject'])->name('subject');
@@ -46,6 +48,10 @@ Route::middleware('auth')->group(function () {
     Route::get('add/{id}', [SubjectController::class, 'addSubject'])->name('subject.add');
     Route::post('storeSubject/{id}', [SubjectController::class, 'userStore'])->name('subject.user');
     Route::get('institution', [InstitutionController::class, 'institute'])->name('institution');
+    Route::post('institution/store', [InstitutionController::class, 'store'])->name('institution.store');
+    Route::get('institution/add/teacher/{id}', [InstitutionController::class, 'addteacher'])->name('institution.add.teacher');
+    Route::post('institution/store/teacher/{id}', [InstitutionController::class, 'storeTeacher'])->name('institution.store.teacher');
+    Route::get('institution/view/teacher/{id}', [InstitutionController::class, 'viewTeacher'])->name('institution.view.teacher');
 
 });
 

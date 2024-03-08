@@ -22,7 +22,8 @@
                             <td scope="row">{{ $teacher->name }}</td>
                             <td><a href="{{ route('subject.add', ['id' => $teacher->id]) }}">Add a subject</a></td>
                             <td><a href="{{ route('subject.view', ['id' => $teacher->id]) }}">View a subject</a></td>
-                            <td><a href="">Add a institute</a></td>
+                            <td><a href="{{ route('user.add.institute', ['id' => $teacher->id]) }}">Add a institute</a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

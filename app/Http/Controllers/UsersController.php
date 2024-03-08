@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Subject;
+use App\Models\Institution;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -51,15 +52,17 @@ class UsersController extends Controller
     }
     public function viewTeacher($id){
         $subject = Subject::find($id);
-        $teachers = $subject->user()->where('role', 'Teacher')->get(['name']);
-        $teacherNames = $teachers->pluck('name')->toArray();
-        return view('teacherPage', ['teacherNames' => $teacherNames]);
+        // $teachers = $subject->user()->where('role', 'Teacher')->get(['name']);
+        $teachers = $subject->user()->where('role', 'Teacher')->get();
+        // $teacherNames = $teachers->pluck('name')->toArray();
+        return view('teacherPage', ['teachers' => $teachers]);
     }
     public function viewStudent($id){
         $subject = Subject::find($id);
-        $students = $subject->user()->where('role', 'Student')->get(['name']);
-        $studentNames = $students->pluck('name')->toArray();
-        return view('studentPage', ['studentNames' => $studentNames]);
+        // $students = $subject->user()->where('role', 'Student')->get(['name']);
+        $students = $subject->user()->where('role', 'Student')->get();
+        // $studentNames = $students->pluck('name')->toArray();
+        return view('studentPage', ['students' => $students]);
     }
     public function showUserSubjects($id){
         try {
@@ -75,5 +78,20 @@ class UsersController extends Controller
         } catch (ModelNotFoundException $exception) {
             return redirect()->back()->with('error', 'User Not found');
         }
+    }
+
+    public function addInstitute($id){
+        $user = User::findOrFail($id);
+        if($user->institute_id !== null){
+            return redirect()->back()->with('danger', 'Already associate with some institute');
+        }
+        $institutions = Institution::all();
+        return view('addInstitute', ['institutions' => $institutions, 'id' => $id]);
+    }
+
+    public function storeInstitute(Request $request, $id){
+        $teacher = User::findOrFail($id);
+        $teacher->update(['institute_id' => $request['institute']]);
+        return redirect()->route('teacher')->with('success', 'Add Institute Successfully');
     }
 }
