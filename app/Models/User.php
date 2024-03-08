@@ -49,4 +49,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Subject::class, 'user_subjects', 'user_id', 'subject_id');
     }
+
+    public function institute(){
+        return $this->hasOne(Institute::class);
+    }
 }
