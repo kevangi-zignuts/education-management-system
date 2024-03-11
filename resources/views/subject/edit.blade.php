@@ -20,14 +20,15 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <form action="{{ route('subject.store') }}" method="post" class="form-inline justify-center">
+                <form action="{{ route('subject.update', ['id' => $subject->id]) }}" method="post"
+                    class="form-inline justify-center">
                     @csrf
                     <div class="form-group col-sm-10">
                         <x-text-input id="subject_name" class="form-control-lg w-75 m-3" type="text"
-                            name="subject_name" :value="old('subject_name')" required />
+                            name="subject_name" value="{{ $subject->subject_name }}" required />
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         <button type="submit" class="btn btn-outline-secondary"
-                            onclick="return confirm('Are you sure you want to add?')">Add a New Subject</button>
+                            onclick="return confirm('Are you sure you want to edit?')">Edit Subject</button>
                     </div>
                 </form>
                 @if (session('success'))

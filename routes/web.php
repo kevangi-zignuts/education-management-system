@@ -50,6 +50,8 @@ Route::middleware('auth')->group(function () {
         Route::get('index', [SubjectController::class, 'subject'])->name('subject');
         Route::post('store', [SubjectController::class, 'store'])->name('subject.store');
         Route::post('delete/{id}', [SubjectController::class, 'delete'])->name('subject.delete');
+        Route::get('edit/{id}', [SubjectController::class, 'edit'])->name('subject.edit');
+        Route::post('update/{id}', [SubjectController::class, 'update'])->name('subject.update');
         Route::get('view/teacher/{id}', [SubjectController::class, 'viewTeacher'])->name('subject.view.teacher');
         Route::get('view/student/{id}', [SubjectController::class, 'viewStudent'])->name('subject.view.student');
     });

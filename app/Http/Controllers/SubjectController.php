@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Subject;
@@ -23,12 +24,18 @@ class SubjectController extends Controller
      */
     public function store(Request $request){
         $request->validate([
-            'subject_name' => 'required|unique:subjects,subject_name',
+            'subject_name' => [
+                'required',
+                Rule::unique('subjects', 'subject_name')->whereNull('deleted_at'),
+            ],
         ]);
 
-        Subject::create([
-            'subject_name' => $request['subject_name'],
-        ]);
+        Subject::create($request->only([
+            'subject_name',
+        ]));
+        // Subject::create([
+        //     'subject_name' => $request['subject_name'],
+        // ]);
 
         return redirect()->back()->with('success', 'New subject is added');
     }
@@ -52,11 +59,32 @@ class SubjectController extends Controller
     }
 
     public function delete($id){
-        $subject = Subject::find($id);
+        $subject = Subject::findOrFail($id);
         if(!$subject){
             return redirect()->route('subject')->with('fail', 'We can not found data');
         }
         $subject->delete();
         return redirect()->route('subject')->with('success', 'Subject deleted successfully');
+    }
+
+    public function edit($id){
+        $subject = Subject::findOrFail($id);
+        $subjects = Subject::paginate(5);
+        // return redirect()->route('subject', ['subject' => $subject]);
+        return view('subject.edit', ['subject' => $subject, 'subjects' => $subjects]);
+    }
+
+    public function update(Request $request, $id){
+        $request->validate([
+            'subject_name' => [
+                'required',
+                Rule::unique('subjects', 'subject_name')->where(function ($query) use ($id) {
+                    return $query->whereNull('deleted_at')->where('id', '<>', $id);
+                }),
+            ],
+        ]);
+        $subject = Subject::findOrFail($id);
+        $subject->update($request->only(['subject_name']));
+        return redirect()->route('subject')->with('success', 'Subject updated Successfully');
     }
 }

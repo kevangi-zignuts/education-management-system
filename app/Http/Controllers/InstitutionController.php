@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Institution;
 use App\Models\User;
+use App\Models\Institution;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class InstitutionController extends Controller
 {
@@ -21,7 +22,10 @@ class InstitutionController extends Controller
      */
     public function store(Request $request){
         $request->validate([
-            'institute_name' => 'required|unique:institutions,institute_name',
+            'institute_name' => [
+                'required',
+                Rule::unique('institutions', 'institute_name')->whereNull('deleted_at'),
+            ],
         ]);
 
         Institution::create([
