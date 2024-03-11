@@ -10,8 +10,12 @@
             <div class="card">
                 <div class="card-body">
                     @if ($user->role === 'Teacher')
+                        <a class="btn btn-primary mb-3 rounded-circle p-2" href="{{ route('teacher') }}" role="button"><i
+                                class="fa-solid fa-arrow-left"></i></a>
                         <h3 class="card-title h3 mt-6 ml-6">{{ $user->name }} taught the following subjects :- </h3>
                     @else
+                        <a class="btn btn-primary mb-3 rounded-circle p-2" href="{{ route('student') }}"
+                            role="button"><i class="fa-solid fa-arrow-left"></i></a>
                         <h3 class="card-title h3 mt-6 ml-6">{{ $user->name }} learned the following subjects :- </h3>
                     @endif
                     <div class="container">

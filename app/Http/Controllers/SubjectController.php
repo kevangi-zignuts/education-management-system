@@ -50,4 +50,13 @@ class SubjectController extends Controller
         $students   = $subject->user()->where('role', 'Student')->get();
         return view('users.student.view', ['students' => $students, 'subject' => $subject->subject_name]);
     }
+
+    public function delete($id){
+        $subject = Subject::find($id);
+        if(!$subject){
+            return redirect()->route('subject')->with('fail', 'We can not found data');
+        }
+        $subject->delete();
+        return redirect()->route('subject')->with('success', 'Subject deleted successfully');
+    }
 }

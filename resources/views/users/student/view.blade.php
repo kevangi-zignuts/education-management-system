@@ -7,17 +7,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-            <ul>
-                @foreach ($students as $student)
-                    <li>{{ $student->name }}</li>
-                @endforeach
-            </ul>
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="card-title h3">Provide a list of students who have learned the {{ $subject }}
+                            <a class="btn btn-primary mb-3 rounded-circle p-2" href="{{ route('subject') }}"
+                                role="button"><i class="fa-solid fa-arrow-left"></i></a>
+                            <h3 class="card-title h3">Provide a list of students who have learned the
+                                {{ $subject }}
                                 Subject
                             </h3>
                             <ul class="m-6">

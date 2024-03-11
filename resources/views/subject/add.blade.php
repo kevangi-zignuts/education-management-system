@@ -45,7 +45,14 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('subject.user', ['id' => $id]) }}" method="post">
+                        @if ($user->role === 'Teacher')
+                            <a class="btn btn-primary mb-3 rounded-circle p-2" href="{{ route('teacher') }}"
+                                role="button"><i class="fa-solid fa-arrow-left"></i></a>
+                        @else
+                            <a class="btn btn-primary mb-3 rounded-circle p-2" href="{{ route('student') }}"
+                                role="button"><i class="fa-solid fa-arrow-left"></i></a>
+                        @endif
+                        <form action="{{ route('subject.user', ['id' => $user->id]) }}" method="post">
                             @csrf
                             <label class="h4 p-6">Select Subjects:-</label>
                             <div class="row ml-6">

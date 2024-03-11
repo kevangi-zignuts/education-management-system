@@ -21,10 +21,14 @@
                 <div class="card">
                     <div class="card-body">
                         @if (isset($subject))
+                            <a class="btn btn-primary mb-3 rounded-circle p-2" href="{{ route('subject') }}"
+                                role="button"><i class="fa-solid fa-arrow-left"></i></a>
                             <h3 class="card-title h3">Provide a list of teachers who have taught the {{ $subject }}
                                 Subject
                             </h3>
                         @else
+                            <a class="btn btn-primary mb-3 rounded-circle p-2" href="{{ route('institution') }}"
+                                role="button"><i class="fa-solid fa-arrow-left"></i></a>
                             <h3 class="card-title h3">Following teachers are taught in the
                                 {{ $institute->institute_name }}
                                 Institute :-

@@ -33,7 +33,7 @@
                 <table class="table m-4 text-center h5">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col" class="p-3">Teacher Name</th>
+                            <th scope="col" class="p-3">Student Name</th>
                             <th class="p-3">Actions</th>
                         </tr>
                     </thead>
@@ -48,6 +48,14 @@
                                     <a href="{{ route('subject.view', ['id' => $student->id]) }}"
                                         class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6">View
                                         a subject</a>
+                                    <form action="{{ route('user.delete', ['id' => $student->id]) }}" method="post"
+                                        class="d-inline ml-6">
+                                        @csrf
+                                        <button type="submit" class="btn-link"
+                                            onclick="return confirm('Are you sure You want to delete User')"
+                                            style="border: none; background: none;"><i
+                                                class="fa-solid fa-trash text-danger"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

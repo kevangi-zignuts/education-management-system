@@ -52,6 +52,14 @@
                                         class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6">Add
                                         a
                                         institute</a>
+                                    <form action="{{ route('user.delete', ['id' => $teacher->id]) }}" method="post"
+                                        class="d-inline ml-6">
+                                        @csrf
+                                        <button type="submit" class="btn-link"
+                                            onclick="return confirm('Are you sure You want to delete User')"
+                                            style="border: none; background: none;"><i
+                                                class="fa-solid fa-trash text-danger"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

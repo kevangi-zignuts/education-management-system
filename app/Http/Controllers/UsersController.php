@@ -18,6 +18,14 @@ use Illuminate\View\View;
 class UsersController extends Controller
 {
     /**
+     * Show Users Dashboard
+     */
+    public function dashboard(){
+        $users = User::where('role', 'Teacher')
+                    ->orWhere('role', 'Student')->paginate(7);
+        return view('dashboard', ['users'=>$users]);
+    }
+    /**
      * Register Form for the teacher and student
      */
     public function create(){
@@ -40,13 +48,13 @@ class UsersController extends Controller
             'class'     => 'required',
         ]);
 
-        $user = User::create([
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'password'  => Hash::make($request->password),
-            'role'      => $request->role,
-            'class'     => $request->class,
-        ]);
+        User::create($request->only([
+            'name',
+            'email',
+            'password',
+            'role',
+            'class'
+        ]));
 
         return redirect()->route('dashboard')->with('success', 'New User is added');
     }
@@ -77,7 +85,7 @@ class UsersController extends Controller
         foreach ($user->subject as $userSubject) {
             $userSubjectIds[] = $userSubject->id;
         }
-        return view('subject.add', ['subjects' => $subjects, 'id' => $id, 'userSubjectIds' => $userSubjectIds,]);
+        return view('subject.add', ['subjects' => $subjects, 'user' => $user, 'userSubjectIds' => $userSubjectIds,]);
     }
 
     /**
@@ -133,6 +141,15 @@ class UsersController extends Controller
         $teacher = User::findOrFail($id);
         $teacher->update(['institute_id' => $request['institute']]);
         return redirect()->route('teacher')->with('success', 'Add Institute Successfully');
+    }
+
+    public function delete($id){
+        $user = User::find($id);
+        if(!$user){
+            return redirect()->route('dashboard')->with('fail', 'We can not found data');
+        }
+        $user->delete();
+        return redirect()->route('dashboard')->with('success', 'User deleted successfully');
     }
 
 }

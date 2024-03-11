@@ -21,9 +21,9 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
 
     // Routes that use for Users
     Route::group(['prefix' => 'user'], function(){
+        Route::get('dashboard', [UsersController::class, 'dashboard'])->name('dashboard');
         Route::get('create', [UsersController::class, 'create'])->name('user.create');
         Route::post('register', [UsersController::class, 'store'])->name('user.store');
         Route::get('teacher', [UsersController::class, 'teacherIndex'])->name('teacher');
@@ -41,20 +42,23 @@ Route::middleware('auth')->group(function () {
         Route::get('add/{id}', [UsersController::class, 'addSubject'])->name('subject.add');
         Route::get('view/subject/{id}', [UsersController::class, 'showUserSubjects'])->name('subject.view');
         Route::post('storeSubject/{id}', [UsersController::class, 'storeSubject'])->name('subject.user');
+        Route::post('delete/{id}', [UsersController::class, 'delete'])->name('user.delete');
     });
 
     // Subject Page Route
     Route::group(['prefix' => 'subject'], function(){
-        Route::get('', [SubjectController::class, 'subject'])->name('subject');
+        Route::get('index', [SubjectController::class, 'subject'])->name('subject');
         Route::post('store', [SubjectController::class, 'store'])->name('subject.store');
-        Route::get('viewTeacher/{id}', [SubjectController::class, 'viewTeacher'])->name('subject.view.teacher');
-        Route::get('viewStudent/{id}', [SubjectController::class, 'viewStudent'])->name('subject.view.student');
+        Route::post('delete/{id}', [SubjectController::class, 'delete'])->name('subject.delete');
+        Route::get('view/teacher/{id}', [SubjectController::class, 'viewTeacher'])->name('subject.view.teacher');
+        Route::get('view/student/{id}', [SubjectController::class, 'viewStudent'])->name('subject.view.student');
     });
 
     // Institutions Page Route
     Route::group(['prefix' => 'institution'], function(){
-        Route::get('', [InstitutionController::class, 'index'])->name('institution');
+        Route::get('index', [InstitutionController::class, 'index'])->name('institution');
         Route::post('store', [InstitutionController::class, 'store'])->name('institution.store');
+        Route::post('delete/{id}', [InstitutionController::class, 'delete'])->name('institution.delete');
         Route::get('add/teacher/{id}', [InstitutionController::class, 'addteacher'])->name('institution.add.teacher');
         Route::post('store/teacher/{id}', [InstitutionController::class, 'storeTeacher'])->name('institution.store.teacher');
         Route::get('view/teacher/{id}', [InstitutionController::class, 'viewTeacher'])->name('institution.view.teacher');

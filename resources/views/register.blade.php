@@ -1,5 +1,7 @@
 @include('layouts.navigation')
 <x-guest-layout>
+    <a class="btn btn-primary mb-3 rounded-circle p-2" href="{{ route('dashboard') }}" role="button"><i
+            class="fa-solid fa-arrow-left"></i></a>
     <form method="POST" action="{{ route('user.store') }}">
         @csrf
 

@@ -50,19 +50,22 @@ class InstitutionController extends Controller
      */
     public function storeTeacher(Request $request, $id){
         // dd($request->all());
+        $request->validate([
+            'teacher_ids' => 'required|array',
+        ]);
         $institute = Institution::findOrFail($id);
         // dd($request->has('teacher_ids'));
         if($request->has('teacher_ids')){
-            $previouslyAssociatedTeachers = User::where('institute_id', $institute->id)
-                                                ->update(['institute_id' => null]);
-            $previouslyAssociatedTeachers = User::whereIn('id', $request->teacher_ids)
-                                                ->update(['institute_id' => $institute->id]);
-            // $previouslyAssociatedTeachers = User::where(function ($query) use ($institute) {
-            //         $query->where('institute_id', $institute->id)
-            //             ->update(['institute_id' => null]);
-            //         $query->whereIn('id', $request->teacher_ids)
-            //             ->update(['institute_id' => $institute->id]);
-            // })->get();
+            // $previouslyAssociatedTeachers = User::where('institute_id', $institute->id)
+            //                                     ->update(['institute_id' => null]);
+            // $previouslyAssociatedTeachers = User::whereIn('id', $request->teacher_ids)
+            //                                     ->update(['institute_id' => $institute->id]);
+            $previouslyAssociatedTeachers = User::where(function ($query) use ($institute, $request) {
+                    $query->where('institute_id', $institute->id)
+                        ->update(['institute_id' => null]);
+                    $query->whereIn('id', $request->teacher_ids)
+                        ->update(['institute_id' => $institute->id]);
+            })->get();
         }
         // foreach ($previouslyAssociatedTeachers as $teacher) {
         //     $teacher->update(['institute_id' => null]);
@@ -85,5 +88,14 @@ class InstitutionController extends Controller
         }
         $institute = Institution::findOrFail($id);
         return view('users.teacher.view', ['teachers' => $user, 'institute' => $institute]);
+    }
+
+    public function delete($id){
+        $institute = Institution::find($id);
+        if(!$institute){
+            return redirect()->route('institution')->with('fail', 'We can not found data');
+        }
+        $institute->delete();
+        return redirect()->route('institution')->with('success', 'Institution deleted successfully');
     }
 }

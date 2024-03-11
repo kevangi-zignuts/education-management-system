@@ -9,6 +9,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="card">
                 <div class="card-body">
+                    <a class="btn btn-primary rounded-circle p-2" href="{{ route('teacher') }}" role="button"><i
+                            class="fa-solid fa-arrow-left"></i></a>
                     <form action="{{ route('user.store.institute', ['id' => $user->id]) }}" method="post">
                         @csrf
                         <div class="m-6">

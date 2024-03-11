@@ -63,6 +63,14 @@
                                     <a href="{{ route('institution.view.teacher', ['id' => $institution->id]) }}"
                                         class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6">View
                                         Teachers</a>
+                                    <form action="{{ route('institution.delete', ['id' => $institution->id]) }}"
+                                        method="post" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn-link"
+                                            onclick="return confirm('Are you sure You want to delete User')"
+                                            style="border: none; background: none;"><i
+                                                class="fa-solid fa-trash text-danger"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
