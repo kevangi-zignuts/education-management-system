@@ -12,7 +12,7 @@ class InstitutionController extends Controller
      * index Page of the Intitutions
      */
     public function index(){
-        $institutions = Institution::all();
+        $institutions = Institution::paginate(5);
         return view('institution.index', ['institutions' => $institutions]);
     }
 
@@ -21,7 +21,7 @@ class InstitutionController extends Controller
      */
     public function store(Request $request){
         $request->validate([
-            'institute_name' => 'required',
+            'institute_name' => 'required|unique:institutions,institute_name',
         ]);
 
         Institution::create([
@@ -53,16 +53,16 @@ class InstitutionController extends Controller
         $institute = Institution::findOrFail($id);
         // dd($request->has('teacher_ids'));
         if($request->has('teacher_ids')){
-            // $previouslyAssociatedTeachers = User::where('institute_id', $institute->id)
-            //                                     ->update(['institute_id' => null]);
-            // $previouslyAssociatedTeachers = User::whereIn('id', $request->teacher_ids)
-            //                                     ->update(['institute_id' => $institute->id]);
-            $previouslyAssociatedTeachers = User::where(function ($query) use ($institute) {
-                    $query->where('institute_id', $institute->id)
-                        ->update(['institute_id' => null]);
-                    $query->whereIn('id', $request->teacher_ids)
-                        ->update(['institute_id' => $institute->id]);
-            })->get();
+            $previouslyAssociatedTeachers = User::where('institute_id', $institute->id)
+                                                ->update(['institute_id' => null]);
+            $previouslyAssociatedTeachers = User::whereIn('id', $request->teacher_ids)
+                                                ->update(['institute_id' => $institute->id]);
+            // $previouslyAssociatedTeachers = User::where(function ($query) use ($institute) {
+            //         $query->where('institute_id', $institute->id)
+            //             ->update(['institute_id' => null]);
+            //         $query->whereIn('id', $request->teacher_ids)
+            //             ->update(['institute_id' => $institute->id]);
+            // })->get();
         }
         // foreach ($previouslyAssociatedTeachers as $teacher) {
         //     $teacher->update(['institute_id' => null]);
@@ -80,6 +80,10 @@ class InstitutionController extends Controller
      */
     public function viewTeacher($id){
         $user = User::where('institute_id', $id)->get();
-        return view('users.teacher.view', ['teachers' => $user]);
+        if ($user->isEmpty()) {
+            return redirect()->back()->with('error', 'No teacher associated with this institute');
+        }
+        $institute = Institution::findOrFail($id);
+        return view('users.teacher.view', ['teachers' => $user, 'institute' => $institute]);
     }
 }

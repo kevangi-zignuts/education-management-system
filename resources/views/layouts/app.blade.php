@@ -38,4 +38,10 @@
     </div>
 </body>
 
+<script>
+    setTimeout(function() {
+        document.getElementById('error-alert').style.display = 'none';
+    }, 3000);
+</script>
+
 </html>

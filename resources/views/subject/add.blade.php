@@ -42,31 +42,47 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <form action="{{ route('subject.user', ['id' => $id]) }}" method="post">
-                    @csrf
-                    <div>
-                        <label>Select Subjects:</label>
-                        @foreach ($subjects as $subject)
-                            <div class="form-check">
-                                @if (in_array($subject->id, $userSubjectIds))
-                                    <input class="form-check-input" type="checkbox" name="subjects[]"
-                                        value="{{ $subject->id }}" id="subject_{{ $subject->id }}" checked>
-                                    <label class="form-check-label" for="subject_{{ $subject->id }}">
-                                        {{ $subject->subject_name }}
-                                    </label>
-                                @else
-                                    <input class="form-check-input" type="checkbox" name="subjects[]"
-                                        value="{{ $subject->id }}" id="subject_{{ $subject->id }}">
-                                    <label class="form-check-label" for="subject_{{ $subject->id }}">
-                                        {{ $subject->subject_name }}
-                                    </label>
-                                @endif
+
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{ route('subject.user', ['id' => $id]) }}" method="post">
+                            @csrf
+                            <label class="h4 p-6">Select Subjects:-</label>
+                            <div class="row ml-6">
+                                @foreach ($subjects as $subject)
+                                    <div class="form-check col-4">
+                                        @if (in_array($subject->id, $userSubjectIds))
+                                            <input class="form-check-input" type="checkbox" name="subjects[]"
+                                                value="{{ $subject->id }}" id="subject_{{ $subject->id }}" checked>
+                                            <label class="form-check-label h5" for="subject_{{ $subject->id }}">
+                                                {{ $subject->subject_name }}
+                                            </label>
+                                        @else
+                                            <input class="form-check-input" type="checkbox" name="subjects[]"
+                                                value="{{ $subject->id }}" id="subject_{{ $subject->id }}">
+                                            <label class="form-check-label h5" for="subject_{{ $subject->id }}">
+                                                {{ $subject->subject_name }}
+                                            </label>
+                                        @endif
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
-                        <button type="submit" class="btn btn-outline-secondary"
-                            onclick="return confirm('Are you sure you want to add?')">Add Selected Subjects</button>
+                            <button type="submit" class="btn btn-outline-secondary m-6"
+                                onclick="return confirm('Are you sure you want to add?')">Add Selected
+                                Subjects</button>
+                        </form>
+                        {{-- <h3 class="card-title h3">Provide a list of teachers who have taught the {{ $subject }}
+                            Subject
+                        </h3>
+                        <ul class="m-6">
+                            @foreach ($teachers as $teacher)
+                                <li class="h5" style="list-style-type: disc">{{ $teacher->name }}</li>
+                            @endforeach
+                        </ul> --}}
                     </div>
-                </form>
+                </div>
+
+
             </div>
         </div>
 

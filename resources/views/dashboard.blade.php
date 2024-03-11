@@ -7,13 +7,12 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            {{-- <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div> --}}
-            {{-- <a href="#">Add a New User</a> --}}
             <a href="{{ route('user.create') }}" class="btn btn-outline-secondary">Add a New User</a>
+            @if (session('success'))
+                <div id="error-alert" class="alert alert-success m-4">
+                    {{ session('success') }}
+                </div>
+            @endif
         </div>
     </div>
 

@@ -48,14 +48,14 @@ class UsersController extends Controller
             'class'     => $request->class,
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Add a new User');
+        return redirect()->route('dashboard')->with('success', 'New User is added');
     }
 
     /**
      * Index Page of the Teacher
      */
     public function teacherIndex(){
-        $teachers = User::where('role', 'Teacher')->get();
+        $teachers = User::where('role', 'Teacher')->paginate(5);
         return view('users.teacher.index', ['teachers' => $teachers]);
     }
 
@@ -63,7 +63,7 @@ class UsersController extends Controller
      * Index Page of the Student
      */
     public function studentIndex(){
-        $students = User::where('role', 'Student')->get();
+        $students = User::where('role', 'Student')->paginate(5);
         return view('users.student.index', ['students' => $students]);
     }
 
@@ -103,7 +103,7 @@ class UsersController extends Controller
             $user = User::with('subject')->findOrFail($id);
 
             // Check if subjects are loaded
-            if ($user->subject) {
+            if (!$user->subject->isEmpty()) {
                 $subjects = $user->subject;
                 return view('subject.view', ['user' => $user, 'subjects' => $subjects]);
             } else {
@@ -120,10 +120,10 @@ class UsersController extends Controller
     public function addInstitute($id){
         $user = User::findOrFail($id);
         if($user->institute_id !== null){
-            return redirect()->back()->with('danger', 'Already associate with some institute');
+            return redirect()->back()->with('error', 'Already associated with some institute');
         }
         $institutions = Institution::all();
-        return view('institution.add', ['institutions' => $institutions, 'id' => $id]);
+        return view('institution.add', ['institutions' => $institutions, 'user' => $user]);
     }
 
     /**

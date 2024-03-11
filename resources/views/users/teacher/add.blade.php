@@ -7,26 +7,28 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <form action="{{ route('institution.store.teacher', ['id' => $id]) }}" method="post">
-                @csrf
-                <div>
-                    <label>Select Teacher:</label>
-                    {{-- {{ dd($teachers) }} --}}
-                    @foreach ($teachers as $teacher)
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="teacher_ids[]"
-                                value="{{ $teacher->id }}" id="subject_{{ $teacher->id }}"
-                                {{ $selectedTeachers->contains('id', $teacher->id) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="subject_{{ $teacher->id }}">
-                                {{ $teacher->name }}
-                            </label>
-                            {{-- <input type="hidden" name="teacher_id" value="{{ $teacher->id }}"> --}}
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('institution.store.teacher', ['id' => $id]) }}" method="post">
+                        @csrf
+                        <label class="h4 p-6">Select Teacher :- </label>
+                        <div class="row ml-6">
+                            @foreach ($teachers as $teacher)
+                                <div class="form-check col-4">
+                                    <input class="form-check-input" type="checkbox" name="teacher_ids[]"
+                                        value="{{ $teacher->id }}" id="subject_{{ $teacher->id }}"
+                                        {{ $selectedTeachers->contains('id', $teacher->id) ? 'checked' : '' }}>
+                                    <label class="form-check-label h5" for="subject_{{ $teacher->id }}">
+                                        {{ $teacher->name }}
+                                    </label>
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
-                    <button type="submit" class="btn btn-outline-secondary"
-                        onclick="return confirm('Are you sure you want to add?')">Add Selected Teachers</button>
+                        <button type="submit" class="btn btn-outline-secondary m-6"
+                            onclick="return confirm('Are you sure you want to add?')">Add Selected Teachers</button>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
