@@ -105,7 +105,8 @@ Step 8: Run Migrations and Seeders
 Run database migrations and seeders to create database tables and populate them with initial data.
 
 ```bash
-$ php artisan migrate --seed
+$ php artisan migrate
+$ php artisan migrate db:seed --class=UserSeeder
 ```
 
 Step 9:
