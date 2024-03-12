@@ -48,10 +48,12 @@
                                     <td scope="row" class="p-3">{{ $teacher->name }}</td>
                                     <td class="p-3">
                                         <a href="{{ route('user.add.institute', ['id' => $teacher->id]) }}"
-                                            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6">Add
+                                            class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6"><i
+                                                class="fa-solid fa-plus"></i> Add
                                             a institute</a>
                                         <a href="{{ route('user.subject.add', ['id' => $teacher->id]) }}"
-                                            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6">Add
+                                            class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6"><i
+                                                class="fa-solid fa-plus"></i> Add
                                             a subject</a>
                                         <a href="{{ route('user.subject.view', ['id' => $teacher->id]) }}"
                                             class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"><i
@@ -67,7 +69,7 @@
                                                     class="fa-solid fa-trash text-danger"></i></button>
                                         </form>
                                         <a href="{{ route('user.edit', ['id' => $teacher->id]) }}"
-                                            class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pl-6"><i
+                                            class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pl-6"><i
                                                 class="fa-solid fa-pen-to-square" data-bs-toggle="tooltip"
                                                 title="Edit Teacher"></i></a>
                                     </td>

@@ -64,10 +64,12 @@
                                     <td scope="row" class="p-3">{{ $subject->subject_name }}</td>
                                     <td class="p-3"><a
                                             href="{{ route('subject.view.teacher', ['id' => $subject->id]) }}"
-                                            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">View
+                                            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"><i
+                                                class="fa-solid fa-eye"></i> View
                                             Teachers</a>
                                         <a href="{{ route('subject.view.student', ['id' => $subject->id]) }}"
-                                            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pl-6">View
+                                            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pl-6"><i
+                                                class="fa-solid fa-eye"></i> View
                                             Students</a>
                                         <form action="{{ route('subject.delete', ['id' => $subject->id]) }}"
                                             method="post" class="d-inline ml-6">
