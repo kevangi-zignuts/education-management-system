@@ -53,27 +53,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($institutions as $institution)
+                        @if ($institutions->isEmpty())
                             <tr>
-                                <td scope="row" class="p-3">{{ $institution->institute_name }}</td>
-                                <td class="p-3">
-                                    <a href="{{ route('institution.add.teacher', ['id' => $institution->id]) }}"
-                                        class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6">Add
-                                        Teachers</a>
-                                    <a href="{{ route('institution.view.teacher', ['id' => $institution->id]) }}"
-                                        class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6">View
-                                        Teachers</a>
-                                    <form action="{{ route('institution.delete', ['id' => $institution->id]) }}"
-                                        method="post" class="d-inline">
-                                        @csrf
-                                        <button type="submit" class="btn-link"
-                                            onclick="return confirm('Are you sure You want to delete User')"
-                                            style="border: none; background: none;"><i
-                                                class="fa-solid fa-trash text-danger"></i></button>
-                                    </form>
-                                </td>
+                                <td colspan="4" class="text-center text-danger">No Data Available</td>
                             </tr>
-                        @endforeach
+                        @else
+                            @foreach ($institutions as $institution)
+                                <tr>
+                                    <td scope="row" class="p-3">{{ $institution->institute_name }}</td>
+                                    <td class="p-3">
+                                        <a href="{{ route('institution.add.teacher', ['id' => $institution->id]) }}"
+                                            class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6"><i
+                                                class="fa-solid fa-plus" data-bs-toggle="tooltip"
+                                                title="Add Teacher"></i></a>
+                                        <a href="{{ route('institution.view.teacher', ['id' => $institution->id]) }}"
+                                            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6"><i
+                                                class="fa-solid fa-eye" data-bs-toggle="tooltip"
+                                                title="View Teacher"></i></a>
+                                        <form action="{{ route('institution.delete', ['id' => $institution->id]) }}"
+                                            method="post" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn-link"
+                                                onclick="return confirm('Are you sure You want to delete User')"
+                                                style="border: none; background: none;"><i
+                                                    class="fa-solid fa-trash text-danger" data-bs-toggle="tooltip"
+                                                    title="Delete Institute"></i></button>
+                                        </form>
+                                        <a href="{{ route('institution.edit', ['id' => $institution->id]) }}"
+                                            class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pl-6"><i
+                                                class="fa-solid fa-pen-to-square" data-bs-toggle="tooltip"
+                                                title="Edit Institute"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
                 {{ $institutions->links('pagination::bootstrap-5') }}

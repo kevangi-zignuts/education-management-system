@@ -9,7 +9,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Institution extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['institute_name'];
+    protected $fillable = ['institute_name', 'created_by', 'updated_by'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($institution) {
+            $user = auth()->user();
+            if ($user) {
+                $institution->created_by = $user->id;
+            }
+        });
+
+        static::updating(function ($institution) {
+            $user = auth()->user();
+            if ($user) {
+                $institution->updated_by = $user->id;
+            }
+        });
+    }
 
     public function user(){
         return $this->hasMany(User::class);

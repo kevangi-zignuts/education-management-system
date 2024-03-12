@@ -9,7 +9,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Subject extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['subject_name'];
+    protected $fillable = ['subject_name', 'created_by', 'updated_by'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($institution) {
+            $user = auth()->user();
+            if ($user) {
+                $institution->created_by = $user->id;
+            }
+        });
+
+        static::updating(function ($institution) {
+            $user = auth()->user();
+            if ($user) {
+                $institution->updated_by = $user->id;
+            }
+        });
+    }
 
     public function user(){
         return $this->belongsToMany(User::class, 'user_subjects', 'subject_id', 'user_id');

@@ -38,27 +38,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($students as $student)
+                        @if ($students->isEmpty())
                             <tr>
-                                <td scope="row" class="p-3">{{ $student->name }}</td>
-                                <td class="p-3">
-                                    <a href="{{ route('subject.add', ['id' => $student->id]) }}"
-                                        class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6">Add
-                                        a subject</a>
-                                    <a href="{{ route('subject.view', ['id' => $student->id]) }}"
-                                        class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6">View
-                                        a subject</a>
-                                    <form action="{{ route('user.delete', ['id' => $student->id]) }}" method="post"
-                                        class="d-inline ml-6">
-                                        @csrf
-                                        <button type="submit" class="btn-link"
-                                            onclick="return confirm('Are you sure You want to delete User')"
-                                            style="border: none; background: none;"><i
-                                                class="fa-solid fa-trash text-danger"></i></button>
-                                    </form>
-                                </td>
+                                <td colspan="4" class="text-center text-danger">No Data Available</td>
                             </tr>
-                        @endforeach
+                        @else
+                            @foreach ($students as $student)
+                                <tr>
+                                    <td scope="row" class="p-3">{{ $student->name }}</td>
+                                    <td class="p-3">
+                                        <a href="{{ route('user.subject.add', ['id' => $student->id]) }}"
+                                            class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"><i
+                                                class="fa-solid fa-plus" data-bs-toggle="tooltip"
+                                                title="Add Subject"></i></a>
+                                        <a href="{{ route('user.subject.view', ['id' => $student->id]) }}"
+                                            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pl-6"><i
+                                                class="fa-solid fa-eye" data-bs-toggle="tooltip"
+                                                title="View Subject"></i></a>
+                                        <form action="{{ route('user.delete', ['id' => $student->id]) }}" method="post"
+                                            class="d-inline ml-6">
+                                            @csrf
+                                            <button type="submit" class="btn-link"
+                                                onclick="return confirm('Are you sure You want to delete User')"
+                                                style="border: none; background: none;"><i
+                                                    class="fa-solid fa-trash text-danger" data-bs-toggle="tooltip"
+                                                    title="Delete Student"></i></button>
+                                        </form>
+                                        <a href="{{ route('user.edit', ['id' => $student->id]) }}"
+                                            class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pl-6"><i
+                                                class="fa-solid fa-pen-to-square" data-bs-toggle="tooltip"
+                                                title="Edit Student"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
                 {{ $students->links('pagination::bootstrap-5') }}

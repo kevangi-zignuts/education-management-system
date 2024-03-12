@@ -52,6 +52,6 @@ class User extends Authenticatable
     }
 
     public function institute(){
-        return $this->hasOne(Institute::class);
+        return $this->belongsTo(Institution::class, 'institute_id');
     }
 }

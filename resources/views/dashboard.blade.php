@@ -36,29 +36,44 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @if ($users->isEmpty())
                             <tr>
-                                <td scope="row" class="p-3">{{ $user->name }}</td>
-                                <td scope="row" class="p-3">
-                                    @if ($user->role === 'Teacher')
-                                        <button class="btn btn-success active">{{ $user->role }}</button>
-                                    @else
-                                        <button class="btn btn-info active">{{ $user->role }}</button>
-                                    @endif
-                                </td>
-                                <td scope="row" class="p-3">{{ $user->class }}</td>
-                                <td class="p-3">
-                                    <form action="{{ route('user.delete', ['id' => $user->id]) }}" method="post"
-                                        class="d-inline">
-                                        @csrf
-                                        <button type="submit" class="btn-link"
-                                            onclick="return confirm('Are you sure You want to delete User')"
-                                            style="border: none; background: none;"><i
-                                                class="fa-solid fa-trash text-danger"></i></button>
-                                    </form>
-                                </td>
+                                <td colspan="4" class="text-center text-danger">No Data Available</td>
                             </tr>
-                        @endforeach
+                        @else
+                            @foreach ($users as $user)
+                                <tr>
+                                    <td scope="row" class="p-3">{{ $user->name }}</td>
+                                    <td scope="row" class="p-3">
+                                        @if ($user->role === 'Teacher')
+                                            <button class="btn btn-success active">{{ $user->role }}</button>
+                                        @else
+                                            <button class="btn btn-info active">{{ $user->role }}</button>
+                                        @endif
+                                    </td>
+                                    <td scope="row" class="p-3">{{ $user->class }}</td>
+                                    <td class="p-3">
+                                        <a href="{{ route('user.edit', ['id' => $user->id]) }}"
+                                            class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"><i
+                                                class="fa-solid fa-pen-to-square" data-bs-toggle="tooltip"
+                                                title="Edit User"></i></a>
+                                        <form action="{{ route('user.delete', ['id' => $user->id]) }}" method="post"
+                                            class="d-inline pl-6">
+                                            @csrf
+                                            <button type="submit" class="btn-link"
+                                                onclick="return confirm('Are you sure You want to delete User')"
+                                                style="border: none; background: none;"><i
+                                                    class="fa-solid fa-trash text-danger" data-bs-toggle="tooltip"
+                                                    title="Delete User"></i></button>
+                                        </form>
+                                        <a href="{{ route('user.view', ['id' => $user->id]) }}"
+                                            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pl-6"><i
+                                                class="fa-solid fa-eye" data-bs-toggle="tooltip"
+                                                title="View User"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
                 {{ $users->links('pagination::bootstrap-5') }}

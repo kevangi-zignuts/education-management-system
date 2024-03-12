@@ -13,9 +13,13 @@
 <body>
     <x-app-layout>
         <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Subjects') }}
-            </h2>
+            <div class="d-flex">
+                <a class="btn btn-primary rounded-circle " href="{{ route('subject.index') }}" role="button"><i
+                        class="fa-solid fa-arrow-left"></i></a>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-4 mt-1">
+                    {{ __('Edit Subjects') }}
+                </h2>
+            </div>
         </x-slot>
 
         <div class="py-12">
@@ -67,9 +71,6 @@
                                             style="border: none; background: none;"><i
                                                 class="fa-solid fa-trash text-danger"></i></button>
                                     </form>
-                                    <a href="{{ route('subject.edit', ['id' => $subject->id]) }}"
-                                        class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pl-6"><i
-                                            class="fa-solid fa-pen-to-square"></i></a>
                                 </td>
                             </tr>
                         @endforeach
