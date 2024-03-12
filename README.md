@@ -1,4 +1,4 @@
-# **Online Quiz System**
+# **Education Management System**
 
 ## Overview
 
