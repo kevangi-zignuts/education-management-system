@@ -21,7 +21,7 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <a href="{{ route('user.create') }}" class="btn btn-secondary">Add a New User</a>
-                <table class="table m-4 text-center h5">
+                <table class="table text-center h5 mt-6">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col" class="p-3">Student Name</th>

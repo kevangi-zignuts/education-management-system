@@ -30,7 +30,7 @@
                             onclick="return confirm('Are you sure you want to add?')">Add a New Subject</button>
                     </div>
                 </form>
-                <table class="table m-4 text-center h5">
+                <table class="table text-center h5">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col" class="p-3">Subject Name</th>

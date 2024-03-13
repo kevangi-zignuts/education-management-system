@@ -30,12 +30,7 @@
                             onclick="return confirm('Are you sure you want to add?')">Add a New Institute</button>
                     </div>
                 </form>
-                {{-- @if ($errors->has('institute_name'))
-                    <div class="alert alert-danger m-4" id="error-alert">
-                        {{ $errors->first('institute_name') }}
-                    </div>
-                @endif --}}
-                <table class="table m-4 text-center h5">
+                <table class="table text-center h5">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col" class="p-3">Institution Name</th>

@@ -98,6 +98,18 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('subject.index')" :active="request()->routeIs('subject.index')">
+                {{ __('Subjects') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('user.teacher.index')" :active="request()->routeIs('user.teacher.index')">
+                {{ __('Teacher') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('user.student.index')" :active="request()->routeIs('user.student.index')">
+                {{ __('Student') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('institution.index')" :active="request()->routeIs('institution.index')">
+                {{ __('Institution') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

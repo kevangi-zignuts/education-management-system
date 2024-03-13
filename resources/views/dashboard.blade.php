@@ -78,26 +78,22 @@
                 </table>
                 {{ $users->links('pagination::bootstrap-5') }} --}}
                 <div class="row">
-                    <div class="card m-4 col-md-6 text-center shadow-lg p-3  bg-white border-0 rounded"
-                        style="width: 40%">
+                    <div class="card mt-4 mb-4 col-md-6 text-center shadow-lg p-3 w-100 bg-white border-0 rounded">
                         <div class="card-body">
                             <h5 class="card-title h3">Teacher Count :- {{ $teacher_count }}</h5>
                         </div>
                     </div>
-                    <div class="card m-4 col-md-6 text-center shadow-lg p-3  bg-white border-0 rounded"
-                        style="width: 40%">
+                    <div class="card mt-4 mb-4 col-md-6 text-center shadow-lg p-3 w-100 bg-white border-0 rounded">
                         <div class="card-body">
                             <h5 class="card-title h3">Student Count :- {{ $student_count }}</h5>
                         </div>
                     </div>
-                    <div class="card m-4 col-md-6 text-center shadow-lg p-3  bg-white border-0 rounded"
-                        style="width: 40%">
+                    <div class="card mt-4 mb-4 col-md-6 text-center shadow-lg p-3 w-100 bg-white border-0 rounded">
                         <div class="card-body">
                             <h5 class="card-title h3">Subject Count :- {{ $subject_count }}</h5>
                         </div>
                     </div>
-                    <div class="card m-4 col-md-6 text-center shadow-lg p-3  bg-white border-0 rounded"
-                        style="width: 40%">
+                    <div class="card mt-4 mb-4 col-md-6 text-center shadow-lg p-3 w-100 bg-white border-0 rounded">
                         <div class="card-body">
                             <h5 class="card-title h3">Institution Count :- {{ $institute_count }}</h5>
                         </div>
