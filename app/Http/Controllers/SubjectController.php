@@ -41,7 +41,7 @@ class SubjectController extends Controller
      * Edit the data of the Subject
      */
     public function edit($id){
-        $subject = Subject::findOrFail($id);
+        $subject  = Subject::findOrFail($id);
         $subjects = Subject::paginate(7);
 
         return view('subject.edit', ['subject' => $subject, 'subjects' => $subjects]);
@@ -70,28 +70,28 @@ class SubjectController extends Controller
      * View Teacher of the particular subject
      */
     public function viewTeacher($id){
-        $subject    = Subject::findOrFail($id);
-        $teachers   = $subject->user()->where('role', 'Teacher')->get();
+        $subject  = Subject::findOrFail($id);
+        $teachers = $subject->user()->where('role', 'Teacher')->get();
 
         if($teachers->isEmpty()){
             return redirect()->back()->with('error', 'No teachers are taught this subject');
         }
 
-        return view('users.teacher.view', ['teachers' => $teachers, 'subject' => $subject->subject_name]);
+        return view('users.teacher.viewInSubOrInst', ['teachers' => $teachers, 'subject' => $subject->subject_name]);
     }
 
     /**
      * View Student of the particular subject
      */
     public function viewStudent($id){
-        $subject    = Subject::findOrFail($id);
-        $students   = $subject->user()->where('role', 'Student')->get();
+        $subject  = Subject::findOrFail($id);
+        $students = $subject->user()->where('role', 'Student')->get();
 
         if($students->isEmpty()){
-            return redirect()->back()->with('error', 'No teachers are taught this subject');
+            return redirect()->back()->with('error', 'No Student studied this subject');
         }
 
-        return view('users.student.view', ['students' => $students, 'subject' => $subject->subject_name]);
+        return view('users.student.viewInSubject', ['students' => $students, 'subject' => $subject->subject_name]);
     }
 
     /**

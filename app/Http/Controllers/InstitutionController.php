@@ -82,12 +82,12 @@ class InstitutionController extends Controller
      * Open a form for add the teacher in the institution
      */
     public function addTeacher($id){
-        $institute        = Institution::findOrFail($id);
-        $teachers         = User::where('role', 'teacher')
-                                ->where(function ($query) use ($institute) {
-                                $query->whereNull('institute_id')
-                                ->orWhere('institute_id', $institute->id);
-                            })->get();
+        $institute = Institution::findOrFail($id);
+        $teachers  = User::where('role', 'teacher')
+                        ->where(function ($query) use ($institute) {
+                        $query->whereNull('institute_id')
+                            ->orWhere('institute_id', $institute->id);
+                        })->get();
 
         if($teachers->isEmpty()){
             return redirect()->back()->with('error', 'Currently No teacher Available');
@@ -105,11 +105,14 @@ class InstitutionController extends Controller
             'teacher_ids' => 'required|array',
         ]);
         $institute = Institution::findOrFail($id);
+
         if($request->has('teacher_ids')){
             User::where('institute_id', $institute->id)->update(['institute_id' => null]);
             User::whereIn('id', $request->teacher_ids)->update(['institute_id' => $institute->id]);
+
             return redirect()->route('institution.index')->with('success', 'Add teacher Successfullly');
         }
+
         return redirect()->route('institution.index')->with('error', "Teacher can't be added in the institute");
     }
 
@@ -117,14 +120,14 @@ class InstitutionController extends Controller
      * view all the teachers that are in the institution
      */
     public function viewTeacher($id){
-        $user       = User::where('institute_id', $id)->get();
+        $user = User::where('institute_id', $id)->get();
 
         if ($user->isEmpty()) {
             return redirect()->back()->with('error', 'No teacher associated with this institute');
         }
 
-        $institute  = Institution::findOrFail($id);
-        return view('users.teacher.view', ['teachers' => $user, 'institute' => $institute]);
+        $institute = Institution::findOrFail($id);
+        return view('users.teacher.viewInSubOrInst', ['teachers' => $user, 'institute' => $institute]);
     }
 
 }

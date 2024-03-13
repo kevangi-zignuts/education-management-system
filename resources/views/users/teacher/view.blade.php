@@ -1,25 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-app-layout>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-
-<body>
-    <x-app-layout>
-        {{-- <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('View Teacher') }}
-            </h2>
-        </x-slot> --}}
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="container bg-white p-6">
-                    @if (isset($subject))
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="container bg-white p-6">
+                {{-- @if (isset($subject))
                         <a class="btn btn-primary ml-4 mb-3 rounded-circle p-2" href="{{ route('subject.index') }}"
                             role="button"><i class="fa-solid fa-arrow-left"></i></a>
                     @else
@@ -43,11 +27,36 @@
                             </ul>
                         </div>
                     </div>
+                </div> --}}
+                <a class="btn btn-primary ml-4 mb-3 rounded-circle p-2" href="{{ route('user.teacher.index') }}"
+                    role="button"><i class="fa-solid fa-arrow-left"></i></a>
+                <div class="card shadow-lg p-3 m-3 bg-white border-0 rounded">
+                    <div class="card-body">
+                        <h3 class="h2 m-6">Here is the Details of {{ $user->name }} :- </h3>
+                        <ol class="m-6 pl-6 h5" style="list-style-type: decimal">
+                            <li class="p-2">Name :- {{ $user->name }}</li>
+                            <li class="p-2">Email :- {{ $user->email }}</li>
+                            <li class="p-2">Role :- {{ $user->role }}</li>
+                            <li class="p-2">
+                                Taught in class {{ $user->class }}
+                            </li>
+                            <li class="p-2">{{ $user->name }} taught in institute :-
+                                @if ($user->institute_id !== null)
+                                    {{ $user->institute->institute_name }}
+                                @endif
+                            </li>
+                            <li>{{ $user->name }} taught a following subjects :-</li>
+                            <div class="row m-2">
+                                @foreach ($user->subject as $subject)
+                                    <div class="col-4 p-2">
+                                        <p>{{ $subject->subject_name }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </ol>
+                    </div>
                 </div>
             </div>
         </div>
 
-    </x-app-layout>
-</body>
-
-</html>
+</x-app-layout>

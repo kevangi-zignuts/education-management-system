@@ -20,7 +20,9 @@
                                 </label>
                                 <select class="form-control ml-6 mr-6" name="institute">
                                     @foreach ($institutions as $institution)
-                                        <option value="{{ $institution->id }}">{{ $institution->institute_name }}
+                                        <option value="{{ $institution->id }}"
+                                            {{ $user->institute_id == $institution->id ? 'selected' : '' }}>
+                                            {{ $institution->institute_name }}
                                         </option>
                                     @endforeach
                                 </select>

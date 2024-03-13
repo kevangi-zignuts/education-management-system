@@ -22,9 +22,13 @@ class UsersController extends Controller
      * Show Users Dashboard
      */
     public function dashboard(){
-        $users = User::where('role', 'Teacher')
-                    ->orWhere('role', 'Student')->paginate(7);
-        return view('dashboard', ['users'=>$users]);
+        // $users = User::where('role', 'Teacher')
+        //             ->orWhere('role', 'Student')->paginate(7);
+        $teacher_count   = User::where('role', 'teacher')->count();
+        $student_count   = User::where('role', 'student')->count();
+        $subject_count   = Subject::count();
+        $institute_count = Institution::count();
+        return view('dashboard', ['teacher_count' => $teacher_count, 'student_count' => $student_count, 'subject_count' => $subject_count, 'institute_count' => $institute_count]);
     }
 
     /**
@@ -62,14 +66,6 @@ class UsersController extends Controller
     }
 
     /**
-     * View the data of the particular user
-     */
-    public function view($id){
-        $user = User::with('institute')->findOrFail($id);
-        return view('users.view', ['user' => $user]);
-    }
-
-    /**
      * Edit the data of the particular user
      */
     public function edit($id){
@@ -82,14 +78,14 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id){
         $request->validate([
-            'name'      => ['required', 'string', 'max:255'],
-            'email'     => ['required', 'string', 'lowercase', 'email', 'max:255',
-                                Rule::unique('users', 'email')->where(function ($query) use ($id) {
-                                    return $query->where('id', '<>', $id);
-                                }),
-                            ],
-            'role'      => 'required',
-            'class'     => 'required',
+            'name'  => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255',
+                            Rule::unique('users', 'email')->where(function ($query) use ($id) {
+                                return $query->where('id', '<>', $id);
+                            }),
+                        ],
+            'role'  => 'required',
+            'class' => 'required',
         ]);
         $user = User::findOrFail($id);
         $user->update($request->only(['name', 'email', 'role', 'class']));
@@ -141,8 +137,8 @@ class UsersController extends Controller
      * Store a form data of a subject of the particular user
      */
     public function storeSubject(Request $request, $id){
-        $user           = User::findOrFail($id);
-        $subjectIds     = $request->input('subjects');
+        $user       = User::findOrFail($id);
+        $subjectIds = $request->input('subjects');
 
         $user->subject()->sync($subjectIds);
 
@@ -153,34 +149,32 @@ class UsersController extends Controller
     }
 
     /**
-     * For view the Subject of the particular user
+     * For view the details of the particular Teacher
      */
-    public function showUserSubjects($id){
-        try {
-            $user = User::with('subject')->findOrFail($id);
-            if (!$user->subject->isEmpty()) {
-                $subjects = $user->subject;
-                return view('subject.view', ['user' => $user, 'subjects' => $subjects]);
-            } else {
-                return redirect()->back()->with('error', 'No subjects found for user');
-            }
-        } catch (ModelNotFoundException $exception) {
-            return redirect()->back()->with('error', 'User Not found');
-        }
+    public function viewTeacher($id){
+        $user = User::with(['subject', 'institute'])->findOrFail($id);
+        return view('users.teacher.view', ['user' => $user]);
+    }
+
+    /**
+     * For view the details of the particular Student
+     */
+    public function viewStudent($id){
+        $user = User::with('subject')->findOrFail($id);
+        return view('users.student.view', ['user' => $user]);
     }
 
     /**
      * Form Section for the add institute for a particular teacher
      */
     public function addInstitute($id){
-        $user = User::findOrFail($id);
-        if($user->institute_id !== null){
-            return redirect()->back()->with('error', 'Already associated with some institute');
-        }
+        $user         = User::findOrFail($id);
         $institutions = Institution::all();
+
         if($institutions->isEmpty()){
-            return redirect()->back()->with('error', 'There is no institute');
+            return redirect()->back()->with('error', 'There is no institute Available');
         }
+
         return view('institution.add', ['institutions' => $institutions, 'user' => $user]);
     }
 
@@ -190,9 +184,8 @@ class UsersController extends Controller
     public function storeInstitute(Request $request, $id){
         $teacher = User::findOrFail($id);
         $teacher->update(['institute_id' => $request['institute']]);
+
         return redirect()->route('user.teacher.index')->with('success', 'Add Institute Successfully');
     }
-
-
 
 }

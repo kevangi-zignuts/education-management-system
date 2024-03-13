@@ -37,10 +37,10 @@
             <x-input-label for="users_role" :value="__('Role')" />
 
             <select name="role" class="form-control" required>
-                <option value="Teacher">Teacher</option>
-                <option value="Student">Student</option>
+                <option value="Teacher" {{ $user->role === 'Teacher' ? 'selected' : '' }}> Teacher</option>
+                <option value="Student" {{ $user->role === 'Student' ? 'selected' : '' }}>Student</option>
             </select>
-
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">

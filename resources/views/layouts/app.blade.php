@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -39,7 +39,7 @@
             {{ $slot }}
         </main>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 <script>
@@ -52,6 +52,41 @@
     var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
+</script>
+
+<script>
+    function showSuccessAlert(message) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: message,
+            timer: 3000, // 3 seconds
+            showConfirmButton: false,
+        });
+    }
+
+    function showErrorAlert(message) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: message,
+            timer: 3000, // 3 seconds
+            showConfirmButton: false,
+        });
+    }
+
+    // Automatically show success alert if success message exists
+    @if (session('success'))
+        showSuccessAlert('{{ session('success') }}');
+    @endif
+
+    @if (session('error'))
+        showErrorAlert('{{ session('error') }}');
+    @endif
+
+    @if ($errors->any())
+        showErrorAlert('{{ $errors->first() }}');
+    @endif
 </script>
 
 </html>

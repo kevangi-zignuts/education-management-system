@@ -35,21 +35,6 @@
                             onclick="return confirm('Are you sure you want to add?')">Edit Institute</button>
                     </div>
                 </form>
-                @if (session('success'))
-                    <div id="error-alert" class="alert alert-success m-4">
-                        {{ session('success') }}
-                    </div>
-                @endif
-                @if (session('error'))
-                    <div id="error-alert" class="alert alert-danger m-4">
-                        {{ session('error') }}
-                    </div>
-                @endif
-                @if ($errors->has('institute_name'))
-                    <div class="alert alert-danger m-4" id="error-alert">
-                        {{ $errors->first('institute_name') }}
-                    </div>
-                @endif
                 <table class="table m-4 text-center h5">
                     <thead class="thead-dark">
                         <tr>

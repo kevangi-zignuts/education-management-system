@@ -55,10 +55,11 @@
             <x-input-label for="users_role" :value="__('Role')" />
 
             <select name="role" class="form-control" required>
+                <option value="" disabled selected>Choose...</option>
                 <option value="Teacher">Teacher</option>
                 <option value="Student">Student</option>
             </select>
-
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">
