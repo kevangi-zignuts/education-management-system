@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Subject;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use App\Models\Institution;
 use Illuminate\Http\Request;
@@ -158,9 +160,6 @@ class UsersController extends Controller
         $user->subject()->sync($subjectIds);
 
         return redirect()->route('user.index', ['role' => $user->role])->with('success', 'Add Subject Successfully');
-        // if($user->role === 'Teacher'){
-        // }
-        // return redirect()->route('user.student.index')->with('success', 'Add Subject Successfully');
     }
 
     /**
@@ -211,9 +210,15 @@ class UsersController extends Controller
      * Store the data of the form for the add institute for a particular teacher
      */
     public function storeInstitute(Request $request, $id){
-        $teacher = User::findOrFail($id);
-        $teacher->update(['institute_id' => $request['institute']]);
-
+        $teacher = User::with('institute')->findOrFail($id);
+        if($teacher->institute_id !== null){
+            $previousInstitute = $teacher->institute_id;
+            $teacher->update(['institute_id' => $request['institute']]);
+            if($teacher->institute_id == $previousInstitute){
+                return redirect()->route('user.index', ['role' => $teacher->role])->with('success', 'Add Institute Successfully');
+            }
+        }
+        Mail::to($teacher->email)->send(new WelcomeMail($teacher->name, $teacher->institute->institute_name));
         return redirect()->route('user.index', ['role' => $teacher->role])->with('success', 'Add Institute Successfully');
     }
 

@@ -122,7 +122,6 @@ class InstitutionController extends Controller
             return redirect()->route('institution.index')->with('success', 'Add teacher Successfullly');
         }
         User::where('institute_id', $institute->id)->update(['institute_id' => null]);
-        // return redirect()->route('institution.index')->with('error', "Teacher can not be added in the institute");
         return redirect()->route('institution.index')->with('success', "Add teacher Successfullly");
     }
 

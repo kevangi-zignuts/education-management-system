@@ -40,53 +40,46 @@
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        function showSuccessAlert(message) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: message,
+                timer: 3000, // 3 seconds
+                showConfirmButton: false,
+            });
+        }
+
+        function showErrorAlert(message) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: message,
+                timer: 3000, // 3 seconds
+                showConfirmButton: false,
+            });
+        }
+
+        // Automatically show success alert if success message exists
+        @if (session('success'))
+            showSuccessAlert('{{ session('success') }}');
+        @endif
+
+        @if (session('error'))
+            showErrorAlert('{{ session('error') }}');
+        @endif
+
+        @if ($errors->any())
+            showErrorAlert('{{ $errors->first() }}');
+        @endif
+    </script>
 </body>
 
-<script>
-    setTimeout(function() {
-        document.getElementById('error-alert').style.display = 'none';
-    }, 3000);
-
-
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-</script>
-
-<script>
-    function showSuccessAlert(message) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: message,
-            timer: 3000, // 3 seconds
-            showConfirmButton: false,
-        });
-    }
-
-    function showErrorAlert(message) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: message,
-            timer: 3000, // 3 seconds
-            showConfirmButton: false,
-        });
-    }
-
-    // Automatically show success alert if success message exists
-    @if (session('success'))
-        showSuccessAlert('{{ session('success') }}');
-    @endif
-
-    @if (session('error'))
-        showErrorAlert('{{ session('error') }}');
-    @endif
-
-    @if ($errors->any())
-        showErrorAlert('{{ $errors->first() }}');
-    @endif
-</script>
 
 </html>
