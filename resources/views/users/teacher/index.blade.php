@@ -48,7 +48,7 @@
                                             class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pr-6"><i
                                                 class="fa-solid fa-plus"></i> Add
                                             a subject</a>
-                                        <a href="{{ route('user.teacher.view', ['id' => $teacher->id]) }}"
+                                        <a href="{{ route('user.view', ['id' => $teacher->id]) }}"
                                             class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"><i
                                                 class="fa-solid fa-eye" data-bs-toggle="tooltip"
                                                 title="View Teacher Details"></i></a>

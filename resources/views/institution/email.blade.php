@@ -13,7 +13,7 @@
     <div class="container">
         <div class="card m-6 w-100">
             <div class="card-body">
-                <h1 class="heading">Welcome, User</h1>
+                <h1 class="heading">Welcome, {{ $name }}</h1>
                 <p>Thanks for choosing {{ $name }}! We are happy to see you on board.</p>
                 {{-- <p>Hello {{ $name }},</p> --}}
                 {{-- <p>Welcome to the {{ $instituteName }}</p> --}}

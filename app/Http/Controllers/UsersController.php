@@ -164,20 +164,34 @@ class UsersController extends Controller
     }
 
     /**
+     * For view the details of the particular User
+     */
+    public function view($id){
+        $userQuery = User::query();
+        $user = (clone $userQuery)->findOrFail($id);
+        if($user->role === 'Teacher'){
+            $user = (clone $userQuery)->with('subject', 'institute')->findOrFail($id);
+            return view('users.view', ['user' => $user]);
+        }
+        $user = (clone $userQuery)->with('subject')->findOrFail($id);
+        return view('users.view', ['user' => $user]);
+    }
+
+    /**
      * For view the details of the particular Teacher
      */
-    public function viewTeacher($id){
-        $user = User::with(['subject', 'institute'])->findOrFail($id);
-        return view('users.teacher.view', ['user' => $user]);
-    }
+    // public function viewTeacher($id){
+    //     $user = User::with(['subject', 'institute'])->findOrFail($id);
+    //     return view('users.teacher.view', ['user' => $user]);
+    // }
 
     /**
      * For view the details of the particular Student
      */
-    public function viewStudent($id){
-        $user = User::with('subject')->findOrFail($id);
-        return view('users.student.view', ['user' => $user]);
-    }
+    // public function viewStudent($id){
+    //     $user = User::with('subject')->findOrFail($id);
+    //     return view('users.student.view', ['user' => $user]);
+    // }
 
     /**
      * Form Section for the add institute for a particular teacher

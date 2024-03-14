@@ -69,6 +69,25 @@ class SubjectController extends Controller
     /**
      * View Teacher of the particular subject
      */
+    public function view($role, $id){
+        $subject  = Subject::findOrFail($id);
+        if($role === 'Teacher'){
+            $users = $subject->user()->where('role', 'Teacher')->get();
+            if($users->isEmpty()){
+                return redirect()->back()->with('error', 'No teachers are taught this subject');
+            }
+            return view('users.viewInSubOrInst', ['users' => $users, 'subject' => $subject->subject_name]);
+        }
+        $users = $subject->user()->where('role', 'Student')->get();
+        if($users->isEmpty()){
+            return redirect()->back()->with('error', 'No Student studied this subject');
+        }
+        return view('users.viewInSubOrInst', ['users' => $users, 'subject' => $subject->subject_name]);
+    }
+
+    /**
+     * View Teacher of the particular subject
+     */
     public function viewTeacher($id){
         $subject  = Subject::findOrFail($id);
         $teachers = $subject->user()->where('role', 'Teacher')->get();

@@ -48,11 +48,11 @@
                                 <tr>
                                     <td scope="row" class="p-3">{{ $subject->subject_name }}</td>
                                     <td class="p-3"><a
-                                            href="{{ route('subject.view.teacher', ['id' => $subject->id]) }}"
+                                            href="{{ route('subject.view', ['role' => 'Teacher', 'id' => $subject->id]) }}"
                                             class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"><i
                                                 class="fa-solid fa-eye"></i> View
                                             Teachers</a>
-                                        <a href="{{ route('subject.view.student', ['id' => $subject->id]) }}"
+                                        <a href="{{ route('subject.view', ['role' => 'Student', 'id' => $subject->id]) }}"
                                             class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover pl-6"><i
                                                 class="fa-solid fa-eye"></i> View
                                             Students</a>

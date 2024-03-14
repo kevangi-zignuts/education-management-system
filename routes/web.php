@@ -42,7 +42,6 @@ Route::middleware('auth')->group(function () {
         Route::post('register', [UsersController::class, 'store'])->name('user.store');
         Route::get('view/{id}', [UsersController::class, 'view'])->name('user.view');
         Route::get('edit/{id}', [UsersController::class, 'edit'])->name('user.edit');
-        // Route::get('edit/{id}', [UsersController::class, 'edit'])->name('user.edit');
         Route::post('update/{id}', [UsersController::class, 'update'])->name('user.update');
         Route::post('delete/{id}', [UsersController::class, 'delete'])->name('user.delete');
         Route::get('index/{role}', [UsersController::class, 'index'])->name('user.index');
@@ -50,8 +49,9 @@ Route::middleware('auth')->group(function () {
         // Route::get('student/index', [UsersController::class, 'studentIndex'])->name('user.student.index');
         Route::get('add/subject/{id}', [UsersController::class, 'addSubject'])->name('user.subject.add');
         Route::post('store/subject/{id}', [UsersController::class, 'storeSubject'])->name('user.subject.store');
-        Route::get('view/teacher/{id}', [UsersController::class, 'viewTeacher'])->name('user.teacher.view');
-        Route::get('view/student/{id}', [UsersController::class, 'viewStudent'])->name('user.student.view');
+        Route::get('view/{id}', [UsersController::class, 'view'])->name('user.view');
+        // Route::get('view/teacher/{id}', [UsersController::class, 'viewTeacher'])->name('user.teacher.view');
+        // Route::get('view/student/{id}', [UsersController::class, 'viewStudent'])->name('user.student.view');
         Route::get('add/institution/{id}', [UsersController::class, 'addInstitute'])->name('user.add.institute');
         Route::post('store/institution/{id}', [UsersController::class, 'storeInstitute'])->name('user.store.institute');
     });
@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
         Route::post('store', [SubjectController::class, 'store'])->name('subject.store');
         Route::get('edit/{id}', [SubjectController::class, 'edit'])->name('subject.edit');
         Route::post('update/{id}', [SubjectController::class, 'update'])->name('subject.update');
+        Route::get('view/{role}/{id}', [SubjectController::class, 'view'])->name('subject.view');
         Route::get('view/teacher/{id}', [SubjectController::class, 'viewTeacher'])->name('subject.view.teacher');
         Route::get('view/student/{id}', [SubjectController::class, 'viewStudent'])->name('subject.view.student');
         Route::post('delete/{id}', [SubjectController::class, 'delete'])->name('subject.delete');
