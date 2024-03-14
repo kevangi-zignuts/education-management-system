@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/sample', function () {
+    return view('institution.email');
+});
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -33,14 +37,17 @@ Route::middleware('auth')->group(function () {
     // Routes that use for Users
     Route::group(['prefix' => 'user'], function(){
         Route::get('dashboard', [UsersController::class, 'dashboard'])->name('dashboard');
-        Route::get('create', [UsersController::class, 'create'])->name('user.create');
+        Route::get('create/{role}', [UsersController::class, 'create'])->name('user.create');
+        // Route::get('create', [UsersController::class, 'create'])->name('user.create');
         Route::post('register', [UsersController::class, 'store'])->name('user.store');
         Route::get('view/{id}', [UsersController::class, 'view'])->name('user.view');
         Route::get('edit/{id}', [UsersController::class, 'edit'])->name('user.edit');
+        // Route::get('edit/{id}', [UsersController::class, 'edit'])->name('user.edit');
         Route::post('update/{id}', [UsersController::class, 'update'])->name('user.update');
         Route::post('delete/{id}', [UsersController::class, 'delete'])->name('user.delete');
-        Route::get('teacher/index', [UsersController::class, 'teacherIndex'])->name('user.teacher.index');
-        Route::get('student/index', [UsersController::class, 'studentIndex'])->name('user.student.index');
+        Route::get('index/{role}', [UsersController::class, 'index'])->name('user.index');
+        // Route::get('teacher/index', [UsersController::class, 'teacherIndex'])->name('user.teacher.index');
+        // Route::get('student/index', [UsersController::class, 'studentIndex'])->name('user.student.index');
         Route::get('add/subject/{id}', [UsersController::class, 'addSubject'])->name('user.subject.add');
         Route::post('store/subject/{id}', [UsersController::class, 'storeSubject'])->name('user.subject.store');
         Route::get('view/teacher/{id}', [UsersController::class, 'viewTeacher'])->name('user.teacher.view');

@@ -3,13 +3,14 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="container bg-white p-6">
-                @if ($user->role === 'Teacher')
-                    <a class="btn btn-primary ml-4 mb-3 rounded-circle p-2" href="{{ route('user.teacher.index') }}"
-                        role="button"><i class="fa-solid fa-arrow-left"></i></a>
+                <a class="btn btn-primary ml-4 mb-3 rounded-circle p-2"
+                    href="{{ route('user.index', ['role' => $user->role]) }}" role="button"><i
+                        class="fa-solid fa-arrow-left"></i></a>
+                {{-- @if ($user->role === 'Teacher')
                 @else
                     <a class="btn btn-primary ml-4 mb-3 rounded-circle p-2" href="{{ route('user.student.index') }}"
                         role="button"><i class="fa-solid fa-arrow-left"></i></a>
-                @endif
+                @endif --}}
                 <div class="card shadow-lg p-3 m-1 bg-white border-0 rounded">
                     <div class="card-body">
                         @if ($user->role === 'Teacher')

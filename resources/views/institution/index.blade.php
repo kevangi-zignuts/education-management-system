@@ -59,7 +59,7 @@
                                             method="post" class="d-inline">
                                             @csrf
                                             <button type="submit" class="btn-link"
-                                                onclick="return confirm('Are you sure You want to delete User')"
+                                                onclick="return confirm('Are you sure You want to Institute')"
                                                 style="border: none; background: none;"><i
                                                     class="fa-solid fa-trash text-danger" data-bs-toggle="tooltip"
                                                     title="Delete Institute"></i></button>

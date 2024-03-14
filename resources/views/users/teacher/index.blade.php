@@ -19,8 +19,8 @@
         </x-slot>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <a href="{{ route('user.create') }}" class="btn btn-secondary">Add a New User</a>
+            <div class="max-w-7xl mx-auto sm:px-6">
+                <a href="{{ route('user.create', ['role' => 'Teacher']) }}" class="btn btn-secondary">Add a New User</a>
                 <table class="table text-center mt-6 h5">
                     <thead class="thead-dark">
                         <tr>

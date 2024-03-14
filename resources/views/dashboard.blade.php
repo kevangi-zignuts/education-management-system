@@ -18,8 +18,8 @@
             </h2>
         </x-slot>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 d-flex flex-wrap">
+        <div class="py-12 mx-auto">
+            <div class="max-w-screen-2xl mx-auto sm:px-6 lg:px-8 d-flex flex-wrap">
                 {{-- <a href="{{ route('user.create') }}" class="btn btn-secondary">Add a New User</a> --}}
                 {{-- @if (session('success'))
                     <div id="error-alert" class="alert alert-success m-4">
@@ -77,23 +77,23 @@
                     </tbody>
                 </table>
                 {{ $users->links('pagination::bootstrap-5') }} --}}
-                <div class="row">
-                    <div class="card mt-4 mb-4 col-md-6 text-center shadow-lg p-3 w-100 bg-white border-0 rounded">
+                <div class="row d-flex flex-wrap">
+                    <div class="card m-4 col-md-6 text-center shadow-lg pt-3 pb-3 max-w-xl bg-white border-0 rounded">
                         <div class="card-body">
                             <h5 class="card-title h3">Teacher Count :- {{ $teacher_count }}</h5>
                         </div>
                     </div>
-                    <div class="card mt-4 mb-4 col-md-6 text-center shadow-lg p-3 w-100 bg-white border-0 rounded">
+                    <div class="card m-4 col-md-6 text-center shadow-lg pt-3 pb-3 max-w-xl bg-white border-0 rounded">
                         <div class="card-body">
                             <h5 class="card-title h3">Student Count :- {{ $student_count }}</h5>
                         </div>
                     </div>
-                    <div class="card mt-4 mb-4 col-md-6 text-center shadow-lg p-3 w-100 bg-white border-0 rounded">
+                    <div class="card m-4 col-md-6 text-center shadow-lg p-3 max-w-xl bg-white border-0 rounded">
                         <div class="card-body">
                             <h5 class="card-title h3">Subject Count :- {{ $subject_count }}</h5>
                         </div>
                     </div>
-                    <div class="card mt-4 mb-4 col-md-6 text-center shadow-lg p-3 w-100 bg-white border-0 rounded">
+                    <div class="card m-4 col-md-6 text-center shadow-lg p-3 max-w-xl bg-white border-0 rounded">
                         <div class="card-body">
                             <h5 class="card-title h3">Institution Count :- {{ $institute_count }}</h5>
                         </div>

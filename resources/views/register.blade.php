@@ -1,15 +1,20 @@
 @include('layouts.navigation')
 <x-guest-layout>
-    <a class="btn btn-primary mb-3 rounded-circle p-2" href="{{ route('dashboard') }}" role="button"><i
-            class="fa-solid fa-arrow-left"></i></a>
+    @if ($role === 'Teacher')
+        <a class="btn btn-primary mb-3 rounded-circle p-2" href="{{ route('user.index', ['role' => 'Teacher']) }}"
+            role="button"><i class="fa-solid fa-arrow-left"></i></a>
+    @else
+        <a class="btn btn-primary mb-3 rounded-circle p-2" href="{{ route('user.index', ['role' => 'Student']) }}"
+            role="button"><i class="fa-solid fa-arrow-left"></i></a>
+    @endif
     <form method="POST" action="{{ route('user.store') }}">
         @csrf
 
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
-                autofocus autocomplete="name" />
+            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
+                required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 

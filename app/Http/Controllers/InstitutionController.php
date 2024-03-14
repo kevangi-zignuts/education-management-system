@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\User;
+use App\Mail\WelcomeMail;
 use App\Models\Institution;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -102,18 +104,26 @@ class InstitutionController extends Controller
      */
     public function storeTeacher(Request $request, $id){
         $request->validate([
-            'teacher_ids' => 'required|array',
+            'teacher_ids' => 'array',
         ]);
         $institute = Institution::findOrFail($id);
-
+        $beforeUpdatingTeachers = User::where('institute_id', $id)->get();
         if($request->has('teacher_ids')){
             User::where('institute_id', $institute->id)->update(['institute_id' => null]);
             User::whereIn('id', $request->teacher_ids)->update(['institute_id' => $institute->id]);
 
+            $afterUpdatingTeachers = User::where('institute_id', $id)->get();
+            foreach($afterUpdatingTeachers as $teacher){
+                $matchingTeacher = $beforeUpdatingTeachers->firstWhere('id', $teacher->id);
+                if(!$matchingTeacher){
+                    \Mail::to($teacher->email)->send(new WelcomeMail($teacher->name, $institute->institute_name));
+                }
+            }
             return redirect()->route('institution.index')->with('success', 'Add teacher Successfullly');
         }
-
-        return redirect()->route('institution.index')->with('error', "Teacher can't be added in the institute");
+        User::where('institute_id', $institute->id)->update(['institute_id' => null]);
+        // return redirect()->route('institution.index')->with('error', "Teacher can not be added in the institute");
+        return redirect()->route('institution.index')->with('success', "Add teacher Successfullly");
     }
 
     /**

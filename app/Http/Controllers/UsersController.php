@@ -24,8 +24,11 @@ class UsersController extends Controller
     public function dashboard(){
         // $users = User::where('role', 'Teacher')
         //             ->orWhere('role', 'Student')->paginate(7);
-        $teacher_count   = User::where('role', 'teacher')->count();
-        $student_count   = User::where('role', 'student')->count();
+        $users   = User::query();
+
+        $student_count = (clone $users)->where('role', 'student')->count();
+        $teacher_count = (clone $users)->where('role', 'teacher')->count();
+
         $subject_count   = Subject::count();
         $institute_count = Institution::count();
         return view('dashboard', ['teacher_count' => $teacher_count, 'student_count' => $student_count, 'subject_count' => $subject_count, 'institute_count' => $institute_count]);
@@ -34,8 +37,8 @@ class UsersController extends Controller
     /**
      * Register Form for the teacher and student
      */
-    public function create(){
-        return view('register');
+    public function create($role){
+        return view('register', ['role' => $role]);
     }
 
     /**
@@ -54,7 +57,7 @@ class UsersController extends Controller
             'class'     => 'required',
         ]);
 
-        User::create($request->only([
+        $user = User::create($request->only([
             'name',
             'email',
             'password',
@@ -62,7 +65,7 @@ class UsersController extends Controller
             'class'
         ]));
 
-        return redirect()->route('dashboard')->with('success', 'New User is added');
+        return redirect()->route('user.index', ['role' => $user->role])->with('success', 'New Teacher is added');
     }
 
     /**
@@ -89,7 +92,7 @@ class UsersController extends Controller
         ]);
         $user = User::findOrFail($id);
         $user->update($request->only(['name', 'email', 'role', 'class']));
-        return redirect()->route('dashboard')->with('success', 'User record updated Successfully');
+        return redirect()->route('user.index', ['role'=>$user->role])->with('success', 'User record updated Successfully');
     }
 
     /**
@@ -101,24 +104,36 @@ class UsersController extends Controller
             return redirect()->route('dashboard')->with('fail', 'We can not found data');
         }
         $user->delete();
-        return redirect()->route('dashboard')->with('success', 'User deleted successfully');
+        return redirect()->route('user.index', ['role' => $user->role])->with('success', 'User deleted successfully');
+    }
+
+    /**
+     * Index Page of the User
+     */
+    public function index($role){
+        if($role === 'Teacher'){
+            $teachers = User::where('role', 'Teacher')->paginate(7);
+            return view('users.teacher.index', ['teachers' => $teachers]);
+        }
+        $students = User::where('role', 'Student')->paginate(7);
+        return view('users.student.index', ['students' => $students]);
     }
 
     /**
      * Index Page of the Teacher
      */
-    public function teacherIndex(){
-        $teachers = User::where('role', 'Teacher')->paginate(7);
-        return view('users.teacher.index', ['teachers' => $teachers]);
-    }
+    // public function teacherIndex(){
+    //     $teachers = User::where('role', 'Teacher')->paginate(7);
+    //     return view('users.teacher.index', ['teachers' => $teachers]);
+    // }
 
     /**
      * Index Page of the Student
      */
-    public function studentIndex(){
-        $students = User::where('role', 'Student')->paginate(7);
-        return view('users.student.index', ['students' => $students]);
-    }
+    // public function studentIndex(){
+    //     $students = User::where('role', 'Student')->paginate(7);
+    //     return view('users.student.index', ['students' => $students]);
+    // }
 
     /**
      * open a form for add Subject to the particular user
@@ -142,10 +157,10 @@ class UsersController extends Controller
 
         $user->subject()->sync($subjectIds);
 
-        if($user->role === 'Teacher'){
-            return redirect()->route('user.teacher.index')->with('success', 'Add Subject Successfully');
-        }
-        return redirect()->route('user.student.index')->with('success', 'Add Subject Successfully');
+        return redirect()->route('user.index', ['role' => $user->role])->with('success', 'Add Subject Successfully');
+        // if($user->role === 'Teacher'){
+        // }
+        // return redirect()->route('user.student.index')->with('success', 'Add Subject Successfully');
     }
 
     /**
@@ -185,7 +200,7 @@ class UsersController extends Controller
         $teacher = User::findOrFail($id);
         $teacher->update(['institute_id' => $request['institute']]);
 
-        return redirect()->route('user.teacher.index')->with('success', 'Add Institute Successfully');
+        return redirect()->route('user.index', ['role' => $teacher->role])->with('success', 'Add Institute Successfully');
     }
 
 }

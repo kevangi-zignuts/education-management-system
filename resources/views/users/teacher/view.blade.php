@@ -28,8 +28,9 @@
                         </div>
                     </div>
                 </div> --}}
-                <a class="btn btn-primary ml-4 mb-3 rounded-circle p-2" href="{{ route('user.teacher.index') }}"
-                    role="button"><i class="fa-solid fa-arrow-left"></i></a>
+                <a class="btn btn-primary ml-4 mb-3 rounded-circle p-2"
+                    href="{{ route('user.index', ['role' => $user->role]) }}" role="button"><i
+                        class="fa-solid fa-arrow-left"></i></a>
                 <div class="card shadow-lg p-3 m-3 bg-white border-0 rounded">
                     <div class="card-body">
                         <h3 class="h2 m-6">Here is the Details of {{ $user->name }} :- </h3>
@@ -38,14 +39,14 @@
                             <li class="p-2">Email :- {{ $user->email }}</li>
                             <li class="p-2">Role :- {{ $user->role }}</li>
                             <li class="p-2">
-                                Taught in class {{ $user->class }}
+                                Class :- {{ $user->class }}
                             </li>
-                            <li class="p-2">{{ $user->name }} taught in institute :-
+                            <li class="p-2">Institute :-
                                 @if ($user->institute_id !== null)
                                     {{ $user->institute->institute_name }}
                                 @endif
                             </li>
-                            <li>{{ $user->name }} taught a following subjects :-</li>
+                            <li>Subjects :- </li>
                             <div class="row m-2">
                                 @foreach ($user->subject as $subject)
                                     <div class="col-4 p-2">

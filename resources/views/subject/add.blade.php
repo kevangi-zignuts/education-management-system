@@ -19,10 +19,11 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="container bg-white p-6">
-                    @php
+                    {{-- @php
                         $route = $user->role === 'Teacher' ? 'user.teacher.index' : 'user.student.index';
-                    @endphp
-                    <a class="btn btn-primary ml-4 mb-3 rounded-circle p-2" href="{{ route($route) }}" role="button">
+                    @endphp --}}
+                    <a class="btn btn-primary ml-4 mb-3 rounded-circle p-2"
+                        href="{{ route('user.index', ['role' => $user->role]) }}" role="button">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
 
