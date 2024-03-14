@@ -32,7 +32,7 @@ class WelcomeMail extends Mailable
     {
         return new Envelope(
             from: new Address('example@example.com', 'Test Sender'),
-            subject: 'Welcome Mail',
+            subject: 'Welcome Mail from '. $this->instituteName,
         );
     }
 

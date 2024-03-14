@@ -22,9 +22,9 @@
 
 {{-- <body class="bg-slate-500" style="background: rgb(212, 210, 210)"> --}}
 
-<body style="background: rgb(212, 210, 210)">
+<body class="bg-light">
     <div class="container mx-auto mt-5">
-        <div class="card mx-auto mx-100 p-3">
+        <div class="card mx-auto mx-100 p-3 shadow-lg mb-5 bg-white rounded">
             <div class="card-body">
                 <p class="heading h4">Welcome, {{ $name }} </p>
                 <p class="mb-5 mt-3">Thanks for choosing {{ $instituteName }} ! We are happy to see you on board.</p>

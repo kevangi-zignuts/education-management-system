@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 
 use App\Models\User;
 use App\Mail\WelcomeMail;
@@ -119,7 +120,10 @@ class InstitutionController extends Controller
                     \Mail::to($teacher->email)->send(new WelcomeMail($teacher->name, $institute->institute_name));
                 }
             }
-            return redirect()->route('institution.index')->with('success', 'Add teacher Successfullly');
+            if (Queue::size() > 0) {
+                // return redirect()->route('institution.index')->with('warning', 'Emails are being sent. Please wait...');
+                return redirect()->route('institution.index')->with('success', 'Add teacher Successfullly');
+            }
         }
         User::where('institute_id', $institute->id)->update(['institute_id' => null]);
         return redirect()->route('institution.index')->with('success', "Add teacher Successfullly");

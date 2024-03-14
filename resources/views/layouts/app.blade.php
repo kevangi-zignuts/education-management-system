@@ -45,7 +45,8 @@
         var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
-
+    </script>
+    <script>
         function showSuccessAlert(message) {
             Swal.fire({
                 icon: 'success',
