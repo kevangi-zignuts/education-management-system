@@ -24,8 +24,6 @@ class UsersController extends Controller
      * Show Users Dashboard
      */
     public function dashboard(){
-        // $users = User::where('role', 'Teacher')
-        //             ->orWhere('role', 'Student')->paginate(7);
         $users   = User::query();
 
         $student_count = (clone $users)->where('role', 'student')->count();
@@ -122,22 +120,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Index Page of the Teacher
-     */
-    // public function teacherIndex(){
-    //     $teachers = User::where('role', 'Teacher')->paginate(7);
-    //     return view('users.teacher.index', ['teachers' => $teachers]);
-    // }
-
-    /**
-     * Index Page of the Student
-     */
-    // public function studentIndex(){
-    //     $students = User::where('role', 'Student')->paginate(7);
-    //     return view('users.student.index', ['students' => $students]);
-    // }
-
-    /**
      * open a form for add Subject to the particular user
      */
     public function addSubject($id){
@@ -175,22 +157,6 @@ class UsersController extends Controller
         $user = (clone $userQuery)->with('subject')->findOrFail($id);
         return view('users.view', ['user' => $user]);
     }
-
-    /**
-     * For view the details of the particular Teacher
-     */
-    // public function viewTeacher($id){
-    //     $user = User::with(['subject', 'institute'])->findOrFail($id);
-    //     return view('users.teacher.view', ['user' => $user]);
-    // }
-
-    /**
-     * For view the details of the particular Student
-     */
-    // public function viewStudent($id){
-    //     $user = User::with('subject')->findOrFail($id);
-    //     return view('users.student.view', ['user' => $user]);
-    // }
 
     /**
      * Form Section for the add institute for a particular teacher

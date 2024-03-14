@@ -30,15 +30,6 @@
                     <x-nav-link :href="route('user.index', ['role' => 'Student'])" :active="request()->is('user/index/Student')">
                         {{ __('Student') }}
                     </x-nav-link>
-                    {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('user.teacher.index')" :active="request()->routeIs('user.teacher.index')">
-                        {{ __('Teacher') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('user.student.index')" :active="request()->routeIs('user.student.index')">
-                        {{ __('Student') }}
-                    </x-nav-link> --}}
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('institution.index')" :active="request()->routeIs('institution.index')">
@@ -116,12 +107,6 @@
             <x-responsive-nav-link :href="route('user.index', ['role' => 'Student'])" :active="request()->is('user/index/Student')">
                 {{ __('Student') }}
             </x-responsive-nav-link>
-            {{-- <x-responsive-nav-link :href="route('user.teacher.index')" :active="request()->routeIs('user.teacher.index')">
-                {{ __('Teacher') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('user.student.index')" :active="request()->routeIs('user.student.index')">
-                {{ __('Student') }}
-            </x-responsive-nav-link> --}}
             <x-responsive-nav-link :href="route('institution.index')" :active="request()->routeIs('institution.index')">
                 {{ __('Institution') }}
             </x-responsive-nav-link>
